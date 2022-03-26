@@ -1,59 +1,59 @@
-// let correctValue = false;
+// function randomBetween(min, max) {
+//     return Math.floor(Math.random() * (max - min + 1) + min);
+// }
 //
-// while (correctValue === false) {
-//     const rawData = prompt("How many subs are added for a month?");
-//     let answerUser = parseInt(rawData);
-//     if(rawData === null){
-//         break;
-//     }
-//     if (isNaN(answerUser) === true) {
-//         console.log("Please enter correct numberic value!");
-//     } else {
-//         const yearAdd = 12 * answerUser;
+// let goodAnswers = 0;
+// let intQCount = NaN;
 //
-//         if (yearAdd >= 100 && yearAdd < 1000) {
-//             console.log("You will achieve silver button");
-//         } else if (yearAdd >= 1000 && yearAdd < 10000) {
-//             console.log("You will achieve gold button");
-//         } else if (yearAdd >= 10000) {
-//             console.log("You will achieve diamond button");
-//         }
-//         correctValue = true;
+// do {
+//     const qCount = prompt("Enter number of questions:");
+//     intQCount = parseInt(qCount);
+// } while (isNaN(intQCount) === true);
+//
+//
+// for (let i = 0; i < intQCount; i++) {
+//     const x = randomBetween(0, 10);
+//     const y = randomBetween(0, 10);
+//     const correctAnswer = x * y;
+//     const answer = prompt(`How much is ${x} * ${y} ?`);
+//     if (parseInt(answer) === correctAnswer) {
+//         goodAnswers += 1;
 //     }
+// }
+//
+// if (goodAnswers > Math.floor(intQCount * 0.6)) {
+//     console.log(`You passed the test! You had ${goodAnswers} correct answers from ${intQCount}.`);
+// } else {
+//     console.log(`You failed the test! You had ${goodAnswers} correct answers from ${intQCount}.`);
 // }
 
 
+// ---------- Array
+
+const arr = [];
+const nonEmpty = ["Kasia", "Janek", "Zosia"];
+// const arrExample = new Array(5);
+
+// console.log(nonEmpty.length);
+// console.log(nonEmpty[2]);
+nonEmpty[2] = "Andrzej";
+// console.log(nonEmpty[2]);
 
 
+nonEmpty.push("Kamil", "Anna"); //Dodaje element na końcu tablicy
+const lastElement = nonEmpty.pop(); //Usuwa element z końca tablicy
 
-// const answer = prompt("How much is " + x + "*" + y + "?");
-
-
-
-
-
-let goodAnswers = 0;
-
-let intQCount = NaN;
-
-do {
-    const qCount = prompt("Enter number of questions:");
-    intQCount = parseInt(qCount);
-} while (isNaN(intQCount) === true);
+nonEmpty.unshift("Wojciech"); //Dodaje element na początku tablicy
+const firstElement = nonEmpty.shift(); //Usuwa element z początku tablicy
 
 
-for (let i = 0; i < intQCount; i++) {
-    const x = Math.floor(Math.random() * 10);
-    const y = Math.floor(Math.random() * 10);
-    const correctAnswer = x * y;
-    const answer = prompt(`How much is ${x} * ${y} ?`);
-    if (parseInt(answer) === correctAnswer) {
-        goodAnswers += 1;
-    }
-}
+nonEmpty.push([1, 5, 8]);
+// console.log(nonEmpty[4][2]);
 
-if (goodAnswers > Math.floor(intQCount * 0.6)) {
-    console.log(`You passed the test! You had ${goodAnswers} correct answers from ${intQCount}.`);
-} else {
-    console.log(`You failed the test! You had ${goodAnswers} correct answers from ${intQCount}.`);
-}
+console.log(nonEmpty.indexOf("Bronek"));
+console.log(nonEmpty.includes("Kamil"));
+
+console.log(nonEmpty);
+console.log(nonEmpty.splice(3, 1));
+console.log(nonEmpty);
+
