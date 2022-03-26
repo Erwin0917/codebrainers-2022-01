@@ -22,18 +22,38 @@
 //     }
 // }
 
-let x = Math.floor(Math.random() * 10);
-let y = Math.floor(Math.random() * 10);
-const correctAnswer = x * y;
+
+
+
 
 // const answer = prompt("How much is " + x + "*" + y + "?");
-const answer = prompt(`How much is ${x} * ${y} ?`);
 
-if (parseInt(answer) === correctAnswer) {
-    console.log("Your answer is correct");
-} else {
-    console.log("Your answer is not correct");
+
+
+
+
+let goodAnswers = 0;
+
+let intQCount = NaN;
+
+do {
+    const qCount = prompt("Enter number of questions:");
+    intQCount = parseInt(qCount);
+} while (isNaN(intQCount) === true);
+
+
+for (let i = 0; i < intQCount; i++) {
+    const x = Math.floor(Math.random() * 10);
+    const y = Math.floor(Math.random() * 10);
+    const correctAnswer = x * y;
+    const answer = prompt(`How much is ${x} * ${y} ?`);
+    if (parseInt(answer) === correctAnswer) {
+        goodAnswers += 1;
+    }
 }
 
-
-
+if (goodAnswers > Math.floor(intQCount * 0.6)) {
+    console.log(`You passed the test! You had ${goodAnswers} correct answers from ${intQCount}.`);
+} else {
+    console.log(`You failed the test! You had ${goodAnswers} correct answers from ${intQCount}.`);
+}
