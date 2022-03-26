@@ -57,3 +57,6 @@ console.log(nonEmpty);
 console.log(nonEmpty.splice(3, 1));
 console.log(nonEmpty);
 
+// 1. Wypełnić maszyne 49 piłeczkami.
+// 2. Losować 6 razy jedną piłeczkę.
+// 3. Stworzyć kupon i sprawdzić ile razy będzie losowanie 6tki aż trafimy nasze liczby.
