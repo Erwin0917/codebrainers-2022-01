@@ -72,11 +72,12 @@ console.log("Compare resutls: ", compareArrays([1, 2, 3], [3, 2, 1]))
 
 const availableNumbers = []
 
+
 for (let i = 1; i < 16; i++) {
     availableNumbers.push(i);
 }
 
-const drawnNumbers = [];
+let drawnNumbers = [];
 
 function letsDraw() {
     for (let i = 1; i < 4; i++) {
@@ -92,10 +93,15 @@ const coupon = [4, 12, 15];
 let jackpot = false;
 let numOfDraws = 0;
 
-while (jackpot === false) {
+while (numOfDraws < 4) {
+    drawnNumbers = [];
     letsDraw();
     numOfDraws += 1;
+    // TODO  - fix available numbers, use jackpot while coupon with 6 numbers and lets draw instead 3
+    console.log(availableNumbers)
     console.log(numOfDraws)
+    console.log("drawnNumbers", drawnNumbers)
+    console.log(coupon)
     if (compareArrays(drawnNumbers, coupon) === true) {
         jackpot = true;
     }
