@@ -1,39 +1,3 @@
-
-// ---------- Array
-
-// const arr = [];
-// const nonEmpty = ["Kasia", "Janek", "Zosia"];
-// // const arrExample = new Array(5);
-
-// // console.log(nonEmpty.length);
-// // console.log(nonEmpty[2]);
-// nonEmpty[2] = "Andrzej";
-// // console.log(nonEmpty[2]);
-
-
-// nonEmpty.push("Kamil", "Anna"); //Dodaje element na końcu tablicy
-// const lastElement = nonEmpty.pop(); //Usuwa element z końca tablicy
-
-// nonEmpty.unshift("Wojciech"); //Dodaje element na początku tablicy
-// const firstElement = nonEmpty.shift(); //Usuwa element z początku tablicy
-
-
-// nonEmpty.push([1, 5, 8]);
-// // console.log(nonEmpty[4][2]);
-
-// console.log(nonEmpty.indexOf("Bronek"));
-// console.log(nonEmpty.includes("Kamil"));
-
-// console.log(nonEmpty);
-// console.log(nonEmpty.splice(3, 1));
-// console.log(nonEmpty);
-
-
-
-// 1. Wypełnić maszyne 49 piłeczkami.
-// 2. Losować 6 razy jedną piłeczkę.
-// 3. Stworzyć kupon i sprawdzić ile razy będzie losowanie 6tki aż trafimy nasze liczby.
-
 function randomBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -68,45 +32,52 @@ function compareArrays(arr1, arr2) {
     return areEqual;
 }
 
-console.log("Compare resutls: ", compareArrays([1, 2, 3], [3, 2, 1]))
 
-const availableNumbers = []
+const availableNumbers = [];
 
-
-for (let i = 1; i < 16; i++) {
-    availableNumbers.push(i);
-}
+// This function  clears availableNumbers array from the previous draw and populates it once again
+function prepToDraw() {
+    availableNumbers.splice(0, 49);
+    for (let i = 1; i < 50; i++) {
+        availableNumbers.push(i);
+    }
+};
 
 let drawnNumbers = [];
 
 function letsDraw() {
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i < 7; i++) {
         const drawnIndex = randomBetween(0, availableNumbers.length - 1);
         drawnNumbers.push(availableNumbers[drawnIndex]);
         availableNumbers.splice(drawnIndex, 1);
     }
+
 }
 
-// const coupon = [4, 12, 29, 44, 13, 23];
-const coupon = [4, 12, 15];
+const coupon = [4, 12, 29, 44, 13, 23];
+// const coupon = [4, 12, 15];
 
 let jackpot = false;
 let numOfDraws = 0;
 
-while (numOfDraws < 4) {
-    drawnNumbers = [];
+while (jackpot === false) {
+    // clear drawnNumbers array before drawing new ones
+    drawnNumbers.splice(0, 6);
+    prepToDraw()
     letsDraw();
     numOfDraws += 1;
-    // TODO  - fix available numbers, use jackpot while coupon with 6 numbers and lets draw instead 3
-    console.log(availableNumbers)
-    console.log(numOfDraws)
-    console.log("drawnNumbers", drawnNumbers)
-    console.log(coupon)
+    // console.log("available nums: ", availableNumbers)
+    // Less printing in the console speeds program up significantly, but none make it look like it doesn't work.
+    if (numOfDraws % 10000 === 0) {
+        console.log("Number of draws: ", numOfDraws)    
+    }
+    
+    // console.log("drawnNumbers", drawnNumbers)
+    // console.log("coupon: ", coupon)
     if (compareArrays(drawnNumbers, coupon) === true) {
+        console.log("YOU'VE WON!")
         jackpot = true;
     }
 }
 
 console.log(`We had to draw ${numOfDraws} times!`);
-
-// It still doesn't seem to finish
