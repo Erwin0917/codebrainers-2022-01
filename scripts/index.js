@@ -57,10 +57,8 @@ function compareArrays(arr1, arr2) {
     let areEqual = true;
 
     arr1.forEach((currentElement, index)=> {
-        // console.log("element: ", currentElement);
-        // console.log("index: ", index);
         const arr2Element = arr2[index];
-        if (currentElement != arr2Element) {
+        if (currentElement !== arr2Element) {
             areEqual = false;
         }
     });
@@ -68,49 +66,44 @@ function compareArrays(arr1, arr2) {
     return areEqual;
 }
 
-// console.log("Compare results: ", compareArrays([1, 2, 3], [3, 2, 1]))
-
-let availableNumbers = [];
-
 function setAvailableNumbers() {
-    availableNumbers = [];
+    const availableNumbers = [];
     for (let i = 1; i < 49; i++) {
         availableNumbers.push(i);
     }
+    return availableNumbers;
 }
 
-let drawnNumbers = [];
-
-function letsDraw() {
-    drawnNumbers = [];
+function letsDraw(availableNumbers) {
+    const drawnNumbers = [];
     for (let i = 1; i < 7; i++) {
         const drawnIndex = randomBetween(0, availableNumbers.length - 1);
         drawnNumbers.push(availableNumbers[drawnIndex]);
         availableNumbers.splice(drawnIndex, 1);
     }
+    return drawnNumbers;
 }
 
-const coupon = [4, 12, 29, 44, 13, 23];
-// const coupon = [4, 12, 15];
+function main() {
+    let jackpot = false;
+    let numOfDraws = 0;
+    const coupon = [4, 12, 29, 44, 13, 23];
 
-let jackpot = false;
-let numOfDraws = 0;
 
-while (!jackpot) {
-    setAvailableNumbers();
-    letsDraw();
-    numOfDraws += 1;
-    // DONE  - use jackpot while coupon with 6 numbers and lets draw instead 3
-    // console.log(availableNumbers)
-    // console.log(numOfDraws)
-    // console.log("drawnNumbers", drawnNumbers)
-    // console.log(coupon)
-    // drawnNumbers = coupon;
-    if (compareArrays(drawnNumbers, coupon) === true) {
-        jackpot = true;
+    while (!jackpot) {
+        const availableNumbers = setAvailableNumbers();
+        const drawnNumbers = letsDraw(availableNumbers);
+
+        numOfDraws += 1;
+        if (compareArrays(drawnNumbers, coupon) === true) {
+            jackpot = true;
+        }
     }
+
+    console.log(`We had to draw ${numOfDraws} times!`);
 }
 
-console.log(`We had to draw ${numOfDraws} times!`);
+main();
+
 
 // Finish
