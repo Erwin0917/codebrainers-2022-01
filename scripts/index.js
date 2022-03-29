@@ -23,14 +23,32 @@ function square(number) {
     return number ** 2;
 }
 
-function map(callback){
+function map(callback, array){
     const newArray = [];
-    for(let i = 0; i <= arr.length-1; i++){
-        const elem =arr[i];
+    for(let i = 0; i <= array.length-1; i++){
+        const elem =array[i];
         const index = i;
-        newArray.push(callback(elem, index));
+        newArray.push(callback(elem, index, array));
     }
     return newArray;
 }
-console.log(newArray)
-map(squareNumber)
+// console.log(newArray)
+map(squareNumber, arr)
+
+const arrayFilter = (array) => (callback) => filter(callback, array);
+const arrBeforeFilter = arrayFilter(arr);
+console.log(arrBeforeFilter(getNumber));
+
+function filter(callback, array) {
+    const newArray = [];
+    for (let i =0; i <= array.length - 1; i++) {
+        const value = array[i];
+        const index = i;
+        if (callback(value, index, array) === true) {
+            newArray.push(value);
+        }
+    }
+    return newArray;
+}
+
+console.log(filter(getNumber, arr));
