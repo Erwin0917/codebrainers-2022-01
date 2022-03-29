@@ -68,40 +68,44 @@ function compareArrays(arr1, arr2) {
     return areEqual;
 }
 
-console.log("Compare resutls: ", compareArrays([1, 2, 3], [3, 2, 1]))
+// console.log("Compare results: ", compareArrays([1, 2, 3], [3, 2, 1]))
 
-const availableNumbers = []
+let availableNumbers = [];
 
-
-for (let i = 1; i < 16; i++) {
-    availableNumbers.push(i);
+function setAvailableNumbers() {
+    availableNumbers = [];
+    for (let i = 1; i < 49; i++) {
+        availableNumbers.push(i);
+    }
 }
 
 let drawnNumbers = [];
 
 function letsDraw() {
-    for (let i = 1; i < 4; i++) {
+    drawnNumbers = [];
+    for (let i = 1; i < 7; i++) {
         const drawnIndex = randomBetween(0, availableNumbers.length - 1);
         drawnNumbers.push(availableNumbers[drawnIndex]);
         availableNumbers.splice(drawnIndex, 1);
     }
 }
 
-// const coupon = [4, 12, 29, 44, 13, 23];
-const coupon = [4, 12, 15];
+const coupon = [4, 12, 29, 44, 13, 23];
+// const coupon = [4, 12, 15];
 
 let jackpot = false;
 let numOfDraws = 0;
 
-while (numOfDraws < 4) {
-    drawnNumbers = [];
+while (!jackpot) {
+    setAvailableNumbers();
     letsDraw();
     numOfDraws += 1;
-    // TODO  - fix available numbers, use jackpot while coupon with 6 numbers and lets draw instead 3
-    console.log(availableNumbers)
-    console.log(numOfDraws)
-    console.log("drawnNumbers", drawnNumbers)
-    console.log(coupon)
+    // DONE  - use jackpot while coupon with 6 numbers and lets draw instead 3
+    // console.log(availableNumbers)
+    // console.log(numOfDraws)
+    // console.log("drawnNumbers", drawnNumbers)
+    // console.log(coupon)
+    // drawnNumbers = coupon;
     if (compareArrays(drawnNumbers, coupon) === true) {
         jackpot = true;
     }
@@ -109,4 +113,4 @@ while (numOfDraws < 4) {
 
 console.log(`We had to draw ${numOfDraws} times!`);
 
-// It still doesn't seem to finish
+// Finish
