@@ -5,11 +5,21 @@
 
 const arr = ['ala', 13, 'kasia', 'basia', 5, 'szymek', 'karol', 2];
 
-const newArr = arr.map((element) => {
+const squareNumber = (element) => {
     if (typeof element === "number") {
-        return element ** 2;
+        return square(element);
     }
     return element;
-})
+}
 
-console.log(newArr)
+const getNumber = element => typeof element === "number";
+
+const onlyNumber = arr.filter(getNumber)
+const newArr = arr.map(squareNumber)
+
+console.log(onlyNumber)
+
+function square(number) {
+    return number ** 2;
+}
+
