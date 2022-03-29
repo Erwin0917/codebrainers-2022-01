@@ -3,19 +3,21 @@
 // [].sort((prevElement, nextElement) => {return /number/})
 // const filteredArr = [].filter((element, index) => {return /boolean/})
 
-const arr = ['ala', 13, 'kasia', 'basia', 5, 'szymek', 'karol', 2];
+const arr = ['ala', 13, undefined, 'kasia', 'basia', null, 5, 'szymek', 'karol', 2, NaN, false, ['car', 10, undefined]];
 
 const squareNumber = (element) => {
-    if (typeof element === "number") {
+    if (typeof element === 'number') {
         return square(element);
     }
     return element;
-}
+};
 
-const getNumber = element => typeof element === "number";
+const isNumber = element => typeof element === 'number';
 
-const onlyNumber = arr.filter(getNumber)
-const newArr = arr.map(squareNumber)
+const onlyNumber = arr.filter(isNumber);
+const newArr = arr.map(squareNumber);
+
+const chainMethods = arr.filter(isNumber).map(squareNumber);
 
 // console.log(onlyNumber)
 
@@ -23,25 +25,25 @@ function square(number) {
     return number ** 2;
 }
 
-function map(callback, array){
+function map(callback, array) {
     const newArray = [];
-    for(let i = 0; i <= array.length-1; i++){
-        const elem =array[i];
+    for (let i = 0; i <= array.length - 1; i++) {
+        const elem = array[i];
         const index = i;
         newArray.push(callback(elem, index, array));
     }
     return newArray;
 }
-// console.log(newArray)
-map(squareNumber, arr)
+
+map(squareNumber, arr);
 
 const arrayFilter = (array) => (callback) => filter(callback, array);
 const arrBeforeFilter = arrayFilter(arr);
-console.log(arrBeforeFilter(getNumber));
+console.log(arrBeforeFilter(isNumber));
 
 function filter(callback, array) {
     const newArray = [];
-    for (let i =0; i <= array.length - 1; i++) {
+    for (let i = 0; i <= array.length - 1; i++) {
         const value = array[i];
         const index = i;
         if (callback(value, index, array) === true) {
@@ -51,4 +53,11 @@ function filter(callback, array) {
     return newArray;
 }
 
-console.log(filter(getNumber, arr));
+console.log(filter(isNumber, arr));
+
+
+//TODO: 1. Przefiltrować tablice arr żeby zostały same imiona.
+//TODO: 2. Usunąć wszystkie wartości false => NaN, undefined, null
+//TODO: 3. Zwrócić taka samą tablice ale imiona mają być z wielkiej litery
+//TODO: 4. Zwrócić nową tablice tylko z imionami posortowanymi alfabetycznie
+//TODO: 5. Zwrócić nową tablice z numerami od największego do najmniejszego
