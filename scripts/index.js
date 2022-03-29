@@ -17,9 +17,20 @@ const getNumber = element => typeof element === "number";
 const onlyNumber = arr.filter(getNumber)
 const newArr = arr.map(squareNumber)
 
-console.log(onlyNumber)
+// console.log(onlyNumber)
 
 function square(number) {
     return number ** 2;
 }
 
+function map(callback){
+    const newArray = [];
+    for(let i = 0; i <= arr.length-1; i++){
+        const elem =arr[i];
+        const index = i;
+        newArray.push(callback(elem, index));
+    }
+    return newArray;
+}
+console.log(newArray)
+map(squareNumber)
