@@ -1,9 +1,22 @@
 class Car {
     constructor(color = 'black', maximumSpeed = 230, speed) {
-        this.color = color;
-        this.maximumSpeed = maximumSpeed;
+        if (typeof color === 'string'){
+            this.color = color;
+        } else {
+            this.color = 'black';
+        }
+        if (typeof maximumSpeed === 'number'){
+            this.maximumSpeed = maximumSpeed;
+        } else {
+            this.maximumSpeed = 230;
+        }
+        if (typeof speed === 'number'){
+            this.currentSpeed = speed;
+        } else{
+            this.currentSpeed = 0
+        }
         this.numberOfGears = 6;
-        this.currentSpeed = speed;
+
     }
 
     getColor() {
@@ -47,4 +60,6 @@ firstCar.getColor();
 
 // secondCar.color - get by key
 // secondCar['color']; - get by key
+
+
 
