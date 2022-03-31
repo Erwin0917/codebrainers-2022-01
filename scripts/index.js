@@ -1,22 +1,9 @@
 class Car {
     constructor(color = 'black', maximumSpeed = 230, speed) {
-        if (typeof color === 'string'){
-            this.color = color;
-        } else {
-            this.color = 'black';
-        }
-        if (typeof maximumSpeed === 'number'){
-            this.maximumSpeed = maximumSpeed;
-        } else {
-            this.maximumSpeed = 230;
-        }
-        if (typeof speed === 'number'){
-            this.currentSpeed = speed;
-        } else{
-            this.currentSpeed = 0
-        }
-        this.numberOfGears = 6;
-
+       this.color = typeof color === 'string' ? color : 'black';
+       this.maximumSpeed = typeof maximumSpeed === 'number' ? maximumSpeed : 230;
+       this.currentSpeed = typeof speed === 'number' ? speed : 0;
+       this.numberOfGears = 6;
     }
 
     getColor() {
@@ -32,15 +19,19 @@ class Car {
     }
 
     setSpeed = (speed) => {
-        this.currentSpeed = speed;
+        if (speed >= this.maximumSpeed) {
+            this.currentSpeed = this.maximumSpeed;
+        } else if (speed <= 0) {
+            this.currentSpeed = 0;
+        }
     }
 
     accelerate(howMuch) {
-
+        // this.setSpeed()
     }
 
     decelerate(howMuch) {
-
+        // this.setSpeed()
     }
 
 }
