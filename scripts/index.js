@@ -13,6 +13,11 @@ const squareNumber = (element) => {
 };
 
 const isNumber = element => typeof element === 'number';
+const isFalse = element =>  {
+    if (typeof element === 'number' || typeof element === 'string'){
+        return element;
+    }
+};
 
 const onlyNumber = arr.filter(isNumber);
 const newArr = arr.map(squareNumber);
@@ -39,7 +44,7 @@ map(squareNumber, arr);
 
 const arrayFilter = (array) => (callback) => filter(callback, array);
 const arrBeforeFilter = arrayFilter(arr);
-console.log(arrBeforeFilter(isNumber));
+// console.log(arrBeforeFilter(isNumber));
 
 function filter(callback, array) {
     const newArray = [];
@@ -53,11 +58,46 @@ function filter(callback, array) {
     return newArray;
 }
 
-console.log(filter(isNumber, arr));
+// console.log(filter(isNumber, arr));
 
 
 //TODO: 1. Przefiltrować tablice arr żeby zostały same imiona.
+
+const isName = element => typeof element === 'string';
+const namesOnly = arr.filter(isName);
+console.log("Zadanie 1: ",namesOnly);
+
 //TODO: 2. Usunąć wszystkie wartości false => NaN, undefined, null
+function noFalses(array) {
+    const newArray = [];
+    const smallArray = [];
+    const al = array.length;
+    for (let i=0; i < al; i++) {
+        if ((typeof array[i] === 'number' && !Number.isNaN(array[i])) || typeof array[i] === 'string') {
+            newArray.push(array[i]);
+        }
+    }
+    for (let j=0; j < 3; j++) {
+        if ((typeof array[al-1][j] === 'number' && !Number.isNaN(array[al-1][j])) || typeof array[al-1][j] === 'string') {
+            smallArray.push(array[al-1][j]);
+        }
+    }
+    newArray.push(smallArray);
+    return newArray;
+}
+
+console.log("Zadanie 2: ", noFalses(arr));
+
 //TODO: 3. Zwrócić taka samą tablice ale imiona mają być z wielkiej litery
+const capitalizedNames = (element) => {
+    if (typeof element === 'string') {
+        return (element[0].toUpperCase() + element.slice(1));
+    }
+    return element;
+};
+const capNamesArray = arr.map(capitalizedNames);
+console.log("Zadanie 3:", capNamesArray);
 //TODO: 4. Zwrócić nową tablice tylko z imionami posortowanymi alfabetycznie
+//didn't do - lack of time
 //TODO: 5. Zwrócić nową tablice z numerami od największego do najmniejszego
+//didn't do - lack of time
