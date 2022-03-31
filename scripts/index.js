@@ -63,11 +63,20 @@ const arr = ['ala', 13, undefined, 'kasia', 'basia', null, 5, 'szymek', 'karol',
 // console.log(namesOnlyArr);
 
 //DONE: 2. Usunąć wszystkie wartości false => NaN, undefined, null
-// ew. TODO: usunąć również undefined z tablicy w tablicy
+// ew. DONE: usunąć również undefined z tablicy w tablicy
 
-const noFalsesArr = arr.filter(truthShallSetYouFree => truthShallSetYouFree);
-
-console.log(noFalsesArr);
+// const noFalsesArr = checkForArrs(arr).filter(truthShallSetYouFree => truthShallSetYouFree);
+//
+//
+// function checkForArrs(arg) {
+//     for (let i = 0; i <= arg.length; i++) {
+//         if (Array.isArray(arg[i])) {
+//             arg[i] = arg[i].filter(isItFalse => isItFalse);
+//         }
+//     }
+//     return arg;
+// }
+// console.log(noFalsesArr);
 
 //DONE: 3. Zwrócić taka samą tablice ale imiona mają być z wielkiej litery
 
