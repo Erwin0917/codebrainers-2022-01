@@ -1,3 +1,7 @@
+function isNumber(arg) {
+    return typeof arg === "number";
+}
+
 class Car {
     constructor(color = 'black', maximumSpeed = 230, speed) {
        this.color = typeof color === 'string' ? color : 'black';
@@ -23,15 +27,23 @@ class Car {
             this.currentSpeed = this.maximumSpeed;
         } else if (speed <= 0) {
             this.currentSpeed = 0;
+        } else {
+            this.currentSpeed = speed;
         }
     }
 
     accelerate(howMuch) {
-        // this.setSpeed()
+       if (isNumber(howMuch)) {
+           const newSpeed = this.currentSpeed + howMuch;
+           this.setSpeed(newSpeed);
+       } else {
+           console.warn("Invalid 'howMuch' type. Should be a number.")
+       }
     }
 
     decelerate(howMuch) {
         // this.setSpeed()
+        // TODO: finish this method
     }
 
 }
@@ -42,11 +54,14 @@ const firstCar = new Car('red');
 const secondCar = new Car('black');
 
 console.log(firstCar);
-console.log(secondCar);
+// console.log(secondCar);
+
+firstCar.accelerate(60);
+console.log("1, current speed should be 60:", firstCar);
+firstCar.accelerate(250);
+console.log("2, current speed should be max speed:", firstCar);
 
 
-firstCar.setColor('yellow');
-firstCar.getColor();
 
 
 // secondCar.color - get by key
