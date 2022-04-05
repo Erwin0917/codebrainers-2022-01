@@ -1,13 +1,13 @@
 function isNumber(arg) {
-    return typeof arg === "number";
+    return typeof arg === 'number';
 }
 
 class Car {
     constructor(color = 'black', maximumSpeed = 230, speed) {
-       this.color = typeof color === 'string' ? color : 'black';
-       this.maximumSpeed = typeof maximumSpeed === 'number' ? maximumSpeed : 230;
-       this.currentSpeed = typeof speed === 'number' ? speed : 0;
-       this.numberOfGears = 6;
+        this.color = typeof color === 'string' ? color : 'black';
+        this.maximumSpeed = typeof maximumSpeed === 'number' ? maximumSpeed : 230;
+        this.currentSpeed = typeof speed === 'number' ? speed : 0;
+        this.numberOfGears = 6;
     }
 
     getColor() {
@@ -30,20 +30,25 @@ class Car {
         } else {
             this.currentSpeed = speed;
         }
-    }
+    };
 
     accelerate(howMuch) {
-       if (isNumber(howMuch)) {
-           const newSpeed = this.currentSpeed + howMuch;
-           this.setSpeed(newSpeed);
-       } else {
-           console.warn("Invalid 'howMuch' type. Should be a number.")
-       }
+        if (isNumber(howMuch)) {
+            const newSpeed = this.currentSpeed + howMuch;
+            this.setSpeed(newSpeed);
+        } else {
+            console.warn('Invalid "howMuch" type. Should be a number.');
+        }
     }
 
     decelerate(howMuch) {
-        // this.setSpeed()
-        // TODO: finish this method
+        if (isNumber(howMuch)) {
+            const newSpeed = this.currentSpeed - howMuch;
+            this.setSpeed(newSpeed);
+        } else {
+            throw new Error('Invalid "howMuch" type. Should be a number.');
+            console.warn('Invalid "howMuch" type. Should be a number.');
+        }
     }
 
 }
@@ -57,9 +62,16 @@ console.log(firstCar);
 // console.log(secondCar);
 
 firstCar.accelerate(60);
-console.log("1, current speed should be 60:", firstCar);
+console.log('1, current speed should be 60:', firstCar);
 firstCar.accelerate(250);
-console.log("2, current speed should be max speed:", firstCar);
+console.log('2, current speed should be max speed:', firstCar);
+firstCar.decelerate(200);
+
+try {
+
+} catch (error) {
+    // console.log(error);
+}
 
 
 
