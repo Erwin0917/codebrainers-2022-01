@@ -78,9 +78,9 @@ const darkCharacter = new Villain(40);
 const axe = new Weapon(randomBetween(2, 5),randomBetween(6,10));
 
 firstHero.setWeapon(axe);
-//TODO: Finish getdamage method
-//TODO: darkcharacter attack firsthero in while
-//TODO: darkcharacter attack firsthero in while
+//TODO: Finish getDamage method
+//TODO: darkCharacter attack firstHero in while
+//TODO: Use Weapon in attack method
 
 
 while (darkCharacter.isAlive()) {
