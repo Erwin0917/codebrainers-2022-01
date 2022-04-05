@@ -2,6 +2,11 @@ class Person {
     constructor(hitPoints) {
         this.hitPoints = hitPoints;
         this.strength = 0;
+
+    }
+
+    attack(character, power) {
+        character.hitPoints -= power
     }
 
     isAlive() {
@@ -26,24 +31,9 @@ class Villain extends Person {
     }
 }
 
+const firstHero = new Hero(50);
+const darkCharacter = new Villain(40);
 
+console.log(darkCharacter)
+firstHero.attack(darkCharacter, 10);
 
-const firstPerson = new Person('20');
-const firstHero = new Hero('50');
-
-firstPerson.isAlive();
-firstHero.isAlive();
-
-console.log(firstPerson);
-console.log(firstHero);
-
-console.log(firstHero instanceof Person);
-console.log(firstHero instanceof Hero);
-console.log(firstPerson instanceof Hero);
-
-
-function checkCharacter(person) {
-    if (person instanceof Hero) {
-        person.isAlive();
-    }
-}
