@@ -16,9 +16,10 @@ class Person {
             console.error("'Character' is not an instance of 'Person'");
             return;
         }
-        const attackQuality = randomBetween(1, 20);
+        const attackQuality = randomBetween(1, 7);
+        let damageWeapon = this.weapon.getDamage(darkCharacter, firstHero)
         if (attackQuality < character.armorRating) {
-            power = power * 0.1;
+            power = damageWeapon;
         }
         const healthPool = character.hitPoints - power;
         if (healthPool < 0) {
@@ -26,7 +27,9 @@ class Person {
         } else {
             character.hitPoints = healthPool;
         }
-        console.log("The hit delivered:", power);
+        // console.log("The hit delivered:", power, "and stayed:", healthPool, "HP.");
+        console.log("The hit delivered:", power)
+        console.log("Stayed:", healthPool, "HP.")
     }
 
     isAlive() {
@@ -47,6 +50,7 @@ class Hero extends Person {
     constructor(hitPoints) {
         super(hitPoints);
         this.armorRating = 10;
+        this.strength = 1;
     }
 
     isAlive() {
@@ -58,6 +62,7 @@ class Villain extends Person {
     constructor(hitPoints) {
         super(hitPoints);
         this.armorRating = 10;
+        this.strength = 0;
     }
 }
 
@@ -68,25 +73,34 @@ class Weapon {
     }
 
     getDamage() {
-        return this.maxDamage;
+        return randomBetween(this.minDamage, this.maxDamage);
     }
 }
 
 const firstHero = new Hero(50);
-const darkCharacter = new Villain(40);
+const darkCharacter = new Villain(50);
 
-const axe = new Weapon(randomBetween(2, 5),randomBetween(6,10));
+const axe = new Weapon(randomBetween(1, 1),randomBetween(7, 7));
+const sword = new Weapon(randomBetween(3, 3),randomBetween(5, 5));
 
 firstHero.setWeapon(axe);
+darkCharacter.setWeapon(sword);
+
+while (darkCharacter.isAlive() && firstHero.isAlive()) {
+        console.log("HIT! Hero attacked darkCharacter!");
+        firstHero.attack(darkCharacter);
+        console.log("HIT! DarkCharacter attacked HERO!");
+        darkCharacter.attack(firstHero);
+}
+console.log("FINISH INFO:", darkCharacter);
+console.log("FINISH INFO:", firstHero);
+
+if (firstHero.isAlive()){
+    console.log('Win HERO')
+} else {
+    console.log('Win DARK')
+}
+
 //TODO: Finish getDamage method
 //TODO: darkCharacter attack firstHero in while
 //TODO: Use Weapon in attack method
-
-
-while (darkCharacter.isAlive()) {
-    firstHero.attack(darkCharacter, 10);
-    console.log("HIT! Hero attacked darkCharacter!");
-}
-console.log("Dark Character looks pretty beat up:", darkCharacter);
-
-
