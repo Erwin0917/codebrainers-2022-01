@@ -11,7 +11,6 @@ class Person {
 
     }
 
-    // deleted power from attack method
     attack(character) {
         if (!(character instanceof Person)) {
             console.error('\'Character\' is not an instance of \'Person\'');
@@ -69,7 +68,8 @@ class Villain extends Person {
 }
 
 class Weapon {
-    constructor(minDamage, maxDamage) {
+    constructor(name, minDamage, maxDamage) {
+        this.name = name;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
     }
@@ -79,10 +79,22 @@ class Weapon {
     }
 }
 
+const weaponList = ['axe', 'sword'];
+function weaponGenerator() {
+    //TODO: Finish function
+
+    // new Weapon()
+}
+
 function characterGenerator(type) {
     const hitpoints = randomBetween(40, 60);
     const armor = randomBetween(5, 15);
     const strength = randomBetween(8, 12)
+
+    //TODO: Use weapon generator
+    //const weapon = weaponGenerator()
+
+
     if (type.toLowerCase() === "hero") {
         return new Hero(hitpoints, armor, strength);
     } else if (type.toLowerCase() === "villain") {
@@ -124,26 +136,17 @@ function battle(teamA, teamB) {
 }
 
 function gameInit() {
+    //TODO: use teamGenerator
     const teamA = [];
     const teamB = [];
 
-    const axe = new Weapon(1, 8);
-    const sword = new Weapon(2, 6);
+    // const axe = new Weapon(1, 8);
+    // const sword = new Weapon(2, 6);
 
-    const firstHero = new Hero(50);
-    const secondHero = new Hero( 40);
-    const darkCharacter = new Villain(40);
-    const darkLord = new Villain(50);
-
-    teamA.push(firstHero);
-    teamA.push(secondHero);
-    teamB.push(darkCharacter);
-    teamB.push(darkLord);
-
-    firstHero.setWeapon(axe);
-    secondHero.setWeapon(sword);
-    darkCharacter.setWeapon(sword);
-    darkLord.setWeapon(axe);
+    // firstHero.setWeapon(axe);
+    // secondHero.setWeapon(sword);
+    // darkCharacter.setWeapon(sword);
+    // darkLord.setWeapon(axe);
 
     // battle(teamA, teamB);
 
