@@ -53,18 +53,18 @@ class Person {
 }
 
 class Hero extends Person {
-    constructor(hitPoints) {
+    constructor(hitPoints, armorRating, strength) {
         super(hitPoints);
-        this.armorRating = 10;
-        this.strength = 15;
+        this.armorRating = armorRating;
+        this.strength = strength;
     }
 }
 
 class Villain extends Person {
-    constructor(hitPoints) {
+    constructor(hitPoints, armorRating, strength) {
         super(hitPoints);
-        this.armorRating = 10;
-        this.strength = 12;
+        this.armorRating = armorRating;
+        this.strength = strength;
     }
 }
 
@@ -78,6 +78,28 @@ class Weapon {
         return randomBetween(this.minDamage, this.maxDamage);
     }
 }
+
+function characterGenerator(type) {
+    const hitpoints = randomBetween(40, 60);
+    const armor = randomBetween(5, 15);
+    const strength = randomBetween(8, 12)
+    if (type.toLowerCase() === "hero") {
+        return new Hero(hitpoints, armor, strength);
+    } else if (type.toLowerCase() === "villain") {
+        return new Villain(hitpoints, armor, strength);
+    }
+    console.error("'character type' is wrong");
+}
+
+function teamGenerator(teamCount, teamClass) {
+    const team = [];
+    for (let i = 0; i < teamCount; i++) {
+        team.push(characterGenerator(teamClass));
+    }
+    return team;
+}
+
+console.log("TEAM GENERATOR: ", teamGenerator(5, "Hero"));
 
 function duel(attacker, victim) {
     attacker.attack(victim);
@@ -123,7 +145,7 @@ function gameInit() {
     darkCharacter.setWeapon(sword);
     darkLord.setWeapon(axe);
 
-    battle(teamA, teamB);
+    // battle(teamA, teamB);
 
     if (isTeamAlive(teamB)) {
         console.warn('The forces of evil have triumphed!');
