@@ -3,12 +3,11 @@ function randomBetween(min, max) {
 }
 
 class Person {
-    constructor(hitPoints) {
+    constructor(hitPoints = 0, strength = 10, armorRating = 0) {
         this.hitPoints = hitPoints;
-        this.strength = 0;
-        this.armorRating = 0;
+        this.strength = strength;
+        this.armorRating = armorRating;
         this.weapon = null;
-
     }
 
     attack(character, power) {
@@ -26,6 +25,9 @@ class Person {
         } else {
             character.hitPoints = healthPool;
         }
+        if (this.weapon != null){
+            this.weapon.getDamage(character);
+        }
         console.log("The hit delivered:", power);
     }
 
@@ -36,9 +38,9 @@ class Person {
     setWeapon(weapon) {
         if (weapon instanceof Weapon) {
             this.weapon = weapon;
-            return;
+        } else {
+            console.error(`weapon is not instance of class Weapon ${weapon}`);
         }
-        console.error("weapon is not instance of class Weapon");
     }
 
 }
@@ -67,26 +69,60 @@ class Weapon {
         this.maxDamage = maxDamage;
     }
 
-    getDamage() {
-        return this.maxDamage;
+    getDamage(character) {
+        if (!(character instanceof Person)) {
+            console.error("'Character' is not an instance of 'Person'");
+            return;
+        }
+        let attack = randomBetween(this.minDamage,this.maxDamage);
+        if (character.hitPoints >= attack){
+            character.hitPoints = character.hitPoints - attack;
+            console.log(`Attack by weapon: ${attack} `);
+            if (character.hitPoints <= 0) {
+                console.log(`Critical hit!!`)
+                character.hitPoints = 0;
+            }
+        }
     }
 }
 
 const firstHero = new Hero(50);
 const darkCharacter = new Villain(40);
 
-const axe = new Weapon(randomBetween(2, 5),randomBetween(6,10));
+const axe = new Weapon(randomBetween(4, 7),randomBetween(8,15));
+const stickOfArmageddon = new Weapon(randomBetween(3,5), randomBetween(6,18));
 
 firstHero.setWeapon(axe);
-//TODO: Finish getDamage method
-//TODO: darkCharacter attack firstHero in while
-//TODO: Use Weapon in attack method
+darkCharacter.setWeapon(stickOfArmageddon);
+//DONE: Finish getDamage method
 
+//DONE: darkCharacter attack firstHero in while
+//DONE: Use Weapon in attack method
 
-while (darkCharacter.isAlive()) {
-    firstHero.attack(darkCharacter, 10);
+console.log(`Damage of: \n -Axe: ${axe.minDamage} - ${axe.maxDamage}\n -Stick of Armageddon: ${stickOfArmageddon.minDamage} - ${stickOfArmageddon.maxDamage}`);
+
+// console.log(`First hero is alive? ${firstHero.isAlive()}`);
+// console.log(`Dark Character is alive? ${darkCharacter.isAlive()}`);
+
+while ((firstHero.isAlive() && darkCharacter.isAlive())) {
     console.log("HIT! Hero attacked darkCharacter!");
+    firstHero.attack(darkCharacter, 10);
+    // console.log(`Dark Character is alive? ${darkCharacter.isAlive()}`);
+    console.log(`Hit points of darkCharacter: ${darkCharacter.hitPoints} \n`);
+
+    if (darkCharacter.isAlive()) {
+        console.log("HIT! darkCharacter attacked Hero!");
+        darkCharacter.attack(firstHero, 10);
+        // console.log(`First hero is alive? ${firstHero.isAlive()}`);
+        console.log(`Hit points of Hero: ${firstHero.hitPoints} \n`);
+    }
 }
-console.log("Dark Character looks pretty beat up:", darkCharacter);
+
+if (darkCharacter.isAlive()){
+    console.log("Hero looks pretty beat up:", firstHero);
+} else {
+    console.log("Dark Character looks pretty beat up:", darkCharacter);
+}
+
 
 
