@@ -17,7 +17,7 @@ class Person {
             return;
         }
         const attackQuality = randomBetween(1, 7);
-        let damageWeapon = this.weapon.getDamage(darkCharacter, firstHero)
+        const damageWeapon = this.weapon.getDamage()
         if (attackQuality < character.armorRating) {
             power = damageWeapon;
         }
@@ -80,22 +80,22 @@ class Weapon {
 const firstHero = new Hero(50);
 const darkCharacter = new Villain(50);
 
-const axe = new Weapon(randomBetween(1, 1),randomBetween(7, 7));
-const sword = new Weapon(randomBetween(3, 3),randomBetween(5, 5));
+const axe = new Weapon(randomBetween(1, 1), randomBetween(7, 7));
+const sword = new Weapon(randomBetween(3, 3), randomBetween(5, 5));
 
 firstHero.setWeapon(axe);
 darkCharacter.setWeapon(sword);
 
 while (darkCharacter.isAlive() && firstHero.isAlive()) {
-        console.log("HIT! Hero attacked darkCharacter!");
-        firstHero.attack(darkCharacter);
-        console.log("HIT! DarkCharacter attacked HERO!");
-        darkCharacter.attack(firstHero);
+    console.log("HIT! Hero attacked darkCharacter!");
+    firstHero.attack(darkCharacter);
+    console.log("HIT! DarkCharacter attacked HERO!");
+    darkCharacter.attack(firstHero);
 }
 console.log("FINISH INFO:", darkCharacter);
 console.log("FINISH INFO:", firstHero);
 
-if (firstHero.isAlive()){
+if (firstHero.isAlive()) {
     console.log('Win HERO')
 } else {
     console.log('Win DARK')
