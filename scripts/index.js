@@ -14,16 +14,15 @@ class Person {
     // deleted power from attack method
     attack(character) {
         if (!(character instanceof Person)) {
-            console.error("'Character' is not an instance of 'Person'");
+            console.error('\'Character\' is not an instance of \'Person\'');
             return;
         }
         const attackQuality = randomBetween(0, 20) + this.attackModifier();
-        let damage = this.weapon.getDamage()
+        let damage = this.weapon.getDamage();
         if (attackQuality < character.armorRating) {
             damage = 0;
         } else if (attackQuality - this.attackModifier() > 19) {
             damage = damage * 2;
-            console.log("CRITICAL DAMAGE!")
         }
         const healthPool = character.hitPoints - damage;
         if (healthPool < 0) {
@@ -43,12 +42,12 @@ class Person {
             this.weapon = weapon;
             return;
         }
-        console.error("weapon is not instance of class Weapon");
+        console.error('weapon is not instance of class Weapon');
     }
 
     attackModifier() {
         const modifiers = [-2, -2, -2, -1, 0, 1, 2, 3, 4, 5];
-        return modifiers[Math.floor(this.strength / 2)]
+        return modifiers[Math.floor(this.strength / 2)];
     }
 
 }
@@ -59,11 +58,6 @@ class Hero extends Person {
         this.armorRating = 10;
         this.strength = 15;
     }
-
-    // commented out, because it doesn't fit my vision
-    // isAlive() {
-    //     return super.isAlive() && this.strength > 0;
-    // }
 }
 
 class Villain extends Person {
@@ -85,34 +79,39 @@ class Weapon {
     }
 }
 
-const axe = new Weapon(1, 8);
-const sword = new Weapon(2, 6);
-
-const firstHero = new Hero(50);
-const darkCharacter = new Villain(40);
-
-firstHero.setWeapon(axe);
-//DONE: Finish getDamage method
-//DONE: darkCharacter attack firstHero in while
-//DONE: Use Weapon in attack method
-
-darkCharacter.setWeapon(sword);
-
-while (darkCharacter.isAlive() && firstHero.isAlive()) {
-    console.log("Our brave hero attacks!")
-    firstHero.attack(darkCharacter);
-    if (darkCharacter.isAlive()) {
-        console.log("Now defend yourself!")
-        darkCharacter.attack(firstHero);
+function duel(attacker, victim) {
+    attacker.attack(victim);
+    if (victim.isAlive()) {
+        victim.attack(attacker);
     }
 }
 
-if (darkCharacter.isAlive()) {
-    console.warn("The forces of evil have triumphed!");
-} else {
-    console.warn("You won your first fight.");
+function battle(teamA, teamB) {
+    while (teamA.isAlive() && teamB.isAlive()) {
+        duel(teamA[character], teamB[character]);
+    }
 }
 
-// TODO: refactor code
-// TODO: extend mechanics? Add new stuff?
-// TODO: add unarmed attack version
+function gameInit() {
+    const teamA = [];
+    const teamB = [];
+
+    const axe = new Weapon(1, 8);
+    const sword = new Weapon(2, 6);
+
+    const firstHero = new Hero(50);
+    const darkCharacter = new Villain(40);
+
+    firstHero.setWeapon(axe);
+    darkCharacter.setWeapon(sword);
+
+    battle(teamA, teamB);
+
+    if (teamB.isAlive()) {
+        console.warn('The forces of evil have triumphed!');
+    } else {
+        console.warn('You won your first fight.');
+    }
+}
+
+gameInit();
