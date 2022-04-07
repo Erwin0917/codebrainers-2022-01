@@ -87,8 +87,12 @@ function duel(attacker, victim) {
 }
 
 function battle(teamA, teamB) {
-    while (teamA.isAlive() && teamB.isAlive()) {
-        duel(teamA[character], teamB[character]);
+
+    while (teamA.length > 0 && teamB.length > 0) {
+        teamA.forEach((personA, index) => {
+            duel(personA, teamB[index]);
+        })
+
     }
 }
 
@@ -100,10 +104,19 @@ function gameInit() {
     const sword = new Weapon(2, 6);
 
     const firstHero = new Hero(50);
+    const secondHero = new Hero( 40);
     const darkCharacter = new Villain(40);
+    const darkLord = new Villain(50);
+
+    teamA.push(firstHero);
+    teamA.push(secondHero);
+    teamB.push(darkCharacter);
+    teamB.push(darkLord);
 
     firstHero.setWeapon(axe);
+    secondHero.setWeapon(sword);
     darkCharacter.setWeapon(sword);
+    darkLord.setWeapon(axe);
 
     battle(teamA, teamB);
 
