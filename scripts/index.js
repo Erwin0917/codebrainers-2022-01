@@ -86,9 +86,14 @@ function duel(attacker, victim) {
     }
 }
 
+function isTeamAlive (team) {
+    return team.every((person) => person.isAlive())
+}
+// console.log('Is team alive', isTeamAlive([new Hero(0)]))
+
 function battle(teamA, teamB) {
 
-    while (teamA.length > 0 && teamB.length > 0) {
+    while (isTeamAlive(teamA) && isTeamAlive(teamB)) {
         teamA.forEach((personA, index) => {
             duel(personA, teamB[index]);
         })
@@ -120,7 +125,7 @@ function gameInit() {
 
     battle(teamA, teamB);
 
-    if (teamB.isAlive()) {
+    if (isTeamAlive(teamB)) {
         console.warn('The forces of evil have triumphed!');
     } else {
         console.warn('You won your first fight.');
