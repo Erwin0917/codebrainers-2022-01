@@ -56,7 +56,6 @@ class Hero extends Person {
         super(hitPoints);
         this.armorRating = armorRating;
         this.strength = strength;
-        // this.weapon = weapon;
     }
 }
 
@@ -65,7 +64,6 @@ class Villain extends Person {
         super(hitPoints);
         this.armorRating = armorRating;
         this.strength = strength;
-
     }
 }
 
@@ -96,7 +94,7 @@ function characterGenerator(listOfCharacters) {
     const hitpoints = randomBetween(40, 60);
     const armor = randomBetween(5, 15);
     const strength = randomBetween(8, 12)
-    //TODO: Use weapon generator
+    //DONE: Use weapon generator
     const weapon = weaponGenerator(weaponList);
     const character = listOfCharacters[~~(Math.random() * listOfCharacters.length)];
     let newChar = new character(hitpoints, armor, strength);
@@ -135,7 +133,7 @@ function battle(teamA, teamB) {
 }
 
 function gameInit() {
-    //TODO: use teamGenerator
+    //Done: use teamGenerator
     const teamA = teamGenerator(5, characterList);
     const teamB = teamGenerator(5, characterList);
 
