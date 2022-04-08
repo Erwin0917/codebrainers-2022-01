@@ -101,6 +101,7 @@ function characterGenerator(type) {
     const strength = randomBetween(8, 12)
 
     //TODO: Use weapon generator
+
     //const weapon = weaponGenerator()
 
 
