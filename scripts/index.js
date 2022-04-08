@@ -68,22 +68,31 @@ class Villain extends Person {
 }
 
 class Weapon {
-    constructor(name, minDamage, maxDamage) {
+    constructor(name = '', minDamage = 0, maxDamage = 0) {
         this.name = name;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
     }
-
     getDamage() {
         return randomBetween(this.minDamage, this.maxDamage);
     }
 }
 
-const weaponList = ['axe', 'sword'];
 function weaponGenerator() {
-    //TODO: Finish function
+    const weaponList = ['axe', 'sword', 'spear'];
+    switch (weaponList[randomBetween(0 , weaponList.length - 1)]) {
+        case 'axe':
+            return new Weapon('axe',5, 15);
 
-    // new Weapon()
+        case 'sword':
+            return new Weapon('sword',3, 15);
+
+        case 'spear':
+            return new Weapon('spear',8, 12);
+
+        default:
+            return new Weapon('fist', 1, 5);
+    }
 }
 
 function characterGenerator(type) {
