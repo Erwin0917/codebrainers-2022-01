@@ -18,18 +18,32 @@ class Person {
         }
         const attackQuality = randomBetween(0, 20) + this.attackModifier();
         let damage = this.weapon.getDamage();
-        if (attackQuality < character.armorRating) {
-            damage = 0;
-        } else if (attackQuality - this.attackModifier() > 19) {
-            damage = damage * 2;
+        // Added dodge to stick
+        let dodged = false
+
+        if (character.weapon.name === 'stick') {
+            const randomDodgeNumber = randomBetween(1, 100)
+            console.log(randomDodgeNumber)
+            if (randomDodgeNumber <= character.weapon.dodge) {
+                dodged = true
+                damage = 0;
+            }
         }
-        const healthPool = character.hitPoints - damage;
-        if (healthPool < 0) {
-            character.hitPoints = 0;
-        } else {
-            character.hitPoints = healthPool;
+        if (!dodged) {
+            if (attackQuality < character.armorRating) {
+                damage = 0;
+            } else if (attackQuality - this.attackModifier() > 19) {
+                damage = damage * 2;
+            }
+            const healthPool = character.hitPoints - damage;
+            if (healthPool < 0) {
+                character.hitPoints = 0;
+            } else {
+                character.hitPoints = healthPool;
+            }
         }
-        console.log(`The hit rolled for ${attackQuality}, including +${this.attackModifier()} attack modifier. Damage was ${damage}.`);
+        if (dodged) console.log(`The victim dodged the attack!`)
+        else console.log(`The hit rolled for ${attackQuality}, including +${this.attackModifier()} attack modifier. Damage was ${damage}.`);
     }
 
     isAlive() {
@@ -70,28 +84,30 @@ class Villain extends Person {
 }
 
 class Weapon {
-    constructor(name, minDamage, maxDamage) {
+    constructor(name, minDamage, maxDamage, dodge) {
         this.name = name;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
+        this.dodge = dodge;
     }
 
     getDamage() {
         return randomBetween(this.minDamage, this.maxDamage);
     }
 }
+
 //TODO: Finish function
 const weaponList = ['axe', 'sword', 'hammer', 'stick'];
 function weaponGenerator() {
-    const weaponName = weaponList[randomBetween(0, weaponList.length-1)];
+    const weaponName = weaponList[randomBetween(0, weaponList.length - 1)];
     if (weaponName === 'axe') {
-        return new Weapon(weaponName, 2, 7);
-    } else if (weaponName === 'sword'){
-        return new Weapon(weaponName,3,4);
-    } else if (weaponName === 'hammer'){
-        return new Weapon(weaponName,1,9);
-    } else if (weaponName === 'stick'){
-        return new Weapon(weaponName,1,5);
+        return new Weapon(weaponName, 2, 7, 0);
+    } else if (weaponName === 'sword') {
+        return new Weapon(weaponName, 3, 4, 0);
+    } else if (weaponName === 'hammer') {
+        return new Weapon(weaponName, 1, 9, 0);
+    } else if (weaponName === 'stick') {
+        return new Weapon(weaponName, 1, 5, 30);
     } else {
         console.log('Something went wrong!');
     }
@@ -103,7 +119,7 @@ function characterGenerator(type) {
     const strength = randomBetween(8, 12);
 
     //TODO: Use weapon generator
-    const weapon = weaponGenerator(weaponList);
+    const weapon = weaponGenerator();
 
     if (type.toLowerCase() === "hero") {
         return new Hero(hitpoints, armor, strength, weapon);
@@ -130,7 +146,7 @@ function duel(attacker, victim) {
     }
 }
 
-function isTeamAlive (team) {
+function isTeamAlive(team) {
     return team.every((person) => person.isAlive())
 }
 // console.log('Is team alive', isTeamAlive([new Hero(0)]))
