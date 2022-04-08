@@ -36,13 +36,13 @@ class Person {
         return this.hitPoints > 0;
     }
 
-    setWeapon(weapon) {
-        if (weapon instanceof Weapon) {
-            this.weapon = weapon;
-            return;
-        }
-        console.error('weapon is not instance of class Weapon');
-    }
+    // setWeapon(weapon) {
+    //     if (weapon instanceof Weapon) {
+    //         this.weapon = weapon;
+    //         return;
+    //     }
+    //     console.error('weapon is not instance of class Weapon');
+    // }
 
     attackModifier() {
         const modifiers = [-2, -2, -2, -1, 0, 1, 2, 3, 4, 5];
@@ -52,18 +52,20 @@ class Person {
 }
 
 class Hero extends Person {
-    constructor(hitPoints, armorRating, strength) {
+    constructor(hitPoints, armorRating, strength,weapon) {
         super(hitPoints);
         this.armorRating = armorRating;
         this.strength = strength;
+        this.weapon = weapon;
     }
 }
 
 class Villain extends Person {
-    constructor(hitPoints, armorRating, strength) {
+    constructor(hitPoints, armorRating, strength, weapon) {
         super(hitPoints);
         this.armorRating = armorRating;
         this.strength = strength;
+        this.weapon = weapon;
     }
 }
 
@@ -78,39 +80,26 @@ class Weapon {
     }
 }
 
-function weaponGenerator() {
-    const weaponList = ['axe', 'sword', 'spear'];
-    switch (weaponList[randomBetween(0 , weaponList.length - 1)]) {
-        case 'axe':
-            return new Weapon('axe',5, 15);
+const weaponList = ['axe', 'sword', 'spear', 'bat', 'club','bare hands'];
+//maybe add min and max damage for each weapon
 
-        case 'sword':
-            return new Weapon('sword',3, 15);
-
-        case 'spear':
-            return new Weapon('spear',8, 12);
-
-        default:
-            return new Weapon('fist', 1, 5);
-    }
+function weaponGenerator(listOfWeapons) {
+    const minDamage = randomBetween(1,5);
+    const maxDamage = randomBetween(5,10);
+    const weapon = listOfWeapons[~~(Math.random() * listOfWeapons.length)];
+    return new Weapon(weapon, minDamage, maxDamage);
 }
 
-function characterGenerator(type) {
+const characterList = [Hero, Villain];
+
+function characterGenerator(listOfCharacters) {
     const hitpoints = randomBetween(40, 60);
     const armor = randomBetween(5, 15);
     const strength = randomBetween(8, 12)
-
     //TODO: Use weapon generator
-
-    //const weapon = weaponGenerator()
-
-
-    if (type.toLowerCase() === "hero") {
-        return new Hero(hitpoints, armor, strength);
-    } else if (type.toLowerCase() === "villain") {
-        return new Villain(hitpoints, armor, strength);
-    }
-    console.error("'character type' is wrong");
+    const weapon = weaponGenerator(weaponList);
+    const character = listOfCharacters[~~(Math.random() * listOfCharacters.length)];
+    return new character(hitpoints, armor, strength, weapon);
 }
 
 function teamGenerator(teamCount, teamClass) {
@@ -120,8 +109,6 @@ function teamGenerator(teamCount, teamClass) {
     }
     return team;
 }
-
-console.log("TEAM GENERATOR: ", teamGenerator(5, "Hero"));
 
 function duel(attacker, victim) {
     attacker.attack(victim);
@@ -147,8 +134,11 @@ function battle(teamA, teamB) {
 
 function gameInit() {
     //TODO: use teamGenerator
-    const teamA = [];
-    const teamB = [];
+    const teamA = teamGenerator(5, characterList);
+    const teamB = teamGenerator(5, characterList);
+
+    console.log("TeamA:", teamA);
+    console.log("TeamB:", teamB);
 
     // const axe = new Weapon(1, 8);
     // const sword = new Weapon(2, 6);
@@ -158,7 +148,7 @@ function gameInit() {
     // darkCharacter.setWeapon(sword);
     // darkLord.setWeapon(axe);
 
-    // battle(teamA, teamB);
+    battle(teamA, teamB);
 
     if (isTeamAlive(teamB)) {
         console.warn('The forces of evil have triumphed!');
