@@ -1,119 +1,7 @@
-function randomBetween(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
+import { characterList, teamGenerator } from './character.js';
+import { UiController } from './uiController.js';
+import { GameController } from 'scripts/gameController';
 
-class Person {
-    constructor(hitPoints, name) {
-        this.hitPoints = hitPoints;
-        this.strength = 0;
-        this.armorRating = 0;
-        this.weapon = null;
-        this.name = name;
-
-    }
-
-    attack(character) {
-        if (!(character instanceof Person)) {
-            console.error('\'Character\' is not an instance of \'Person\'');
-            return;
-        }
-        const attackQuality = randomBetween(0, 20) + this.attackModifier();
-        let damage = this.weapon.getDamage();
-        if (attackQuality < character.armorRating) {
-            damage = 0;
-        } else if (attackQuality - this.attackModifier() > 19) {
-            damage = damage * 2;
-        }
-        const healthPool = character.hitPoints - damage;
-        if (healthPool < 0) {
-            character.hitPoints = 0;
-        } else {
-            character.hitPoints = healthPool;
-        }
-        console.log(`The hit rolled for ${attackQuality}, including +${this.attackModifier()} attack modifier. Damage was ${damage}.`);
-    }
-
-    isAlive() {
-        return this.hitPoints > 0;
-    }
-
-    setWeapon(weapon) {
-        if (weapon instanceof Weapon) {
-            this.weapon = weapon;
-            return;
-        }
-        console.error('weapon is not instance of class Weapon');
-    }
-
-    attackModifier() {
-        const modifiers = [-2, -2, -2, -1, 0, 1, 2, 3, 4, 5];
-        return modifiers[Math.floor(this.strength / 2)];
-    }
-}
-
-class Hero extends Person {
-    constructor(hitPoints, armorRating, strength) {
-        super(hitPoints, 'Hero');
-        this.armorRating = armorRating;
-        this.strength = strength;
-    }
-}
-
-class Villain extends Person {
-    constructor(hitPoints, armorRating, strength) {
-        super(hitPoints, 'Villain');
-        this.armorRating = armorRating;
-        this.strength = strength;
-    }
-}
-
-class Weapon {
-    constructor(name, minDamage = 0, maxDamage = 0) {
-        this.name = name;
-        this.minDamage = minDamage;
-        this.maxDamage = maxDamage;
-
-        this.initWeapon(name);
-    }
-
-    initWeapon(name) {
-
-    }
-
-    getDamage() {
-        return randomBetween(this.minDamage, this.maxDamage);
-    }
-}
-
-const weaponList = ['axe', 'sword', 'spear', 'bat', 'club','bare hands'];
-
-function weaponGenerator(listOfWeapons) {
-    const minDamage = randomBetween(1,5);
-    const maxDamage = randomBetween(5,10);
-    const weapon = listOfWeapons[Math.floor(Math.random() * listOfWeapons.length)];
-    return new Weapon(weapon, minDamage, maxDamage);
-}
-
-const characterList = [Hero, Villain];
-
-function characterGenerator(listOfCharacters) {
-    const hitpoints = randomBetween(40, 60);
-    const armor = randomBetween(5, 15);
-    const strength = randomBetween(8, 12)
-    const weapon = weaponGenerator(weaponList);
-    const character = listOfCharacters[Math.floor(Math.random() * listOfCharacters.length)];
-    const newChar = new character(hitpoints, armor, strength);
-    newChar.setWeapon(weapon);
-    return newChar;
-}
-
-function teamGenerator(teamCount, teamClass) {
-    const team = [];
-    for (let i = 0; i < teamCount; i++) {
-        team.push(characterGenerator(teamClass));
-    }
-    return team;
-}
 
 function duel(attacker, victim) {
     attacker.attack(victim);
@@ -135,14 +23,12 @@ function battle(teamA, teamB) {
 }
 
 function gameInit() {
-    const gameWrapperHtml = document.querySelector('.game-wrapper');
+    const gameController = new GameController();
+    const uiController = new UiController(document.querySelector('.game-wrapper'));
+
+
+    // const gameWrapperHtml = ;
     const startBattleButton = gameWrapperHtml.querySelector('#button-start-game');
-    // const randomCharacterButton = gameWrapperHtml.querySelector('#button-random');
-    // const selectTeamInput = gameWrapperHtml.querySelector('#select-team');
-    // const nameInput = gameWrapperHtml.querySelector('#input-name');
-    // const hitPointsInput = gameWrapperHtml.querySelector('#input-hitPoints');
-    // const strengthInput = gameWrapperHtml.querySelector('#input-strength');
-    // const weaponNameInput = gameWrapperHtml.querySelector('#input-weaponName');
     const teamCountInput = gameWrapperHtml.querySelector('#input-team-count');
     const randomTeamsBtn = gameWrapperHtml.querySelector('#button-generate-teams');
     const teamAWrapper = gameWrapperHtml.querySelector('#teamA-wrapper');
@@ -154,17 +40,7 @@ function gameInit() {
     startBattleButton.addEventListener('click', function () {
         battle(teamA, teamB)
     });
-    // randomCharacterButton.addEventListener('click', function (){
-    //     const newCharacter = characterGenerator(characterList);
-    //     nameInput.value = newCharacter.name;
-    //     hitPointsInput.value = newCharacter.hitPoints;
-    //     strengthInput.value = newCharacter.strength;
-    //     weaponNameInput.value = newCharacter.weapon.name;
-    //     console.log('newCharacter', newCharacter);
-    // })
-    // selectTeamInput.addEventListener('change', function (event){
-    //     console.log ('event', event.target.value);
-    // })
+
     randomTeamsBtn.addEventListener('click', function (){
         const enteredTeamCount = teamCountInput.value;
         const teamA = teamGenerator(enteredTeamCount, characterList);
