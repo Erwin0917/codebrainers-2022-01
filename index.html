@@ -12,33 +12,28 @@
 </head>
 <body>
 <div class='rpgui-content'>
+
     <div class='game-wrapper'>
-        <!-- all rpgui elements must be inside the rpgui-content -->
-        <div class='rpgui-content'>
-            <!-- default frame, grey with orange borders -->
-            <div class='rpgui-container framed'>
-            </div>
 
-            <!-- golden frame, with brown background -->
-            <div class='rpgui-container framed-golden'>
-            </div>
 
-            <!-- brighter golden frame, with smoother borders -->
-            <div class='rpgui-container framed-golden-2'>
-            </div>
-
-            <!-- grey frame. this is mostly fitting as internal container inside a "rpgui-container framed" div -->
-            <div class='rpgui-container framed-grey'>
-            </div>
+        <div class='game-controller'>
+            <button class="rpgui-button" id='button-random' type="button"><p>Random character</p></button>
+            <button class="rpgui-button golden" id='button-start-game' type="button"><p>Start game</p></button>
         </div>
+
+
+
+    </div>
+
+
+
+
+    <div class='game-example'>
 
         <div class='rpgui-container rpgui-draggable'>
             <!-- rpgui elements goes here -->
         </div>
 
-        <div class='rpgui-content'>
-            <p>This text will have the RPGUI style!</p>
-        </div>
 
         <input class='rpgui-slider' type='range' min='0' max='10' value='8'>
 
@@ -87,6 +82,7 @@
         <hr class="golden">
         <input class="rpgui-checkbox" type="checkbox"><label>This is checkbox.</label>
 
+        <input type='text' value='Test input'>
 
     </div>
 </div>

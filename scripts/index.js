@@ -71,14 +71,20 @@ class Weapon {
         this.name = name;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
+
+        this.initWeapon(name);
     }
+
+    initWeapon(name) {
+
+    }
+
     getDamage() {
         return randomBetween(this.minDamage, this.maxDamage);
     }
 }
 
 const weaponList = ['axe', 'sword', 'spear', 'bat', 'club','bare hands'];
-//maybe add min and max damage for each weapon
 
 function weaponGenerator(listOfWeapons) {
     const minDamage = randomBetween(1,5);
@@ -93,7 +99,6 @@ function characterGenerator(listOfCharacters) {
     const hitpoints = randomBetween(40, 60);
     const armor = randomBetween(5, 15);
     const strength = randomBetween(8, 12)
-    //DONE: Use weapon generator
     const weapon = weaponGenerator(weaponList);
     const character = listOfCharacters[Math.floor(Math.random() * listOfCharacters.length)];
     const newChar = new character(hitpoints, armor, strength);
@@ -119,7 +124,6 @@ function duel(attacker, victim) {
 function isTeamAlive (team) {
     return team.every((person) => person.isAlive())
 }
-// console.log('Is team alive', isTeamAlive([new Hero(0)]))
 
 function battle(teamA, teamB) {
     while (isTeamAlive(teamA) && isTeamAlive(teamB)) {
@@ -130,22 +134,17 @@ function battle(teamA, teamB) {
 }
 
 function gameInit() {
-    //Done: use teamGenerator
+    const gameWrapperHtml = document.querySelector('.game-wrapper');
+    const startBattleButton = gameWrapperHtml.querySelector('#button-start-game');
+
     const teamA = teamGenerator(5, characterList);
     const teamB = teamGenerator(5, characterList);
 
-    console.log("TeamA:", teamA);
-    console.log("TeamB:", teamB);
+    startBattleButton.addEventListener('click', function () {
+        battle(teamA, teamB)
+    });
 
-    // const axe = new Weapon(1, 8);
-    // const sword = new Weapon(2, 6);
 
-    // firstHero.setWeapon(axe);
-    // secondHero.setWeapon(sword);
-    // darkCharacter.setWeapon(sword);
-    // darkLord.setWeapon(axe);
-
-    battle(teamA, teamB);
 
     if (isTeamAlive(teamB)) {
         console.warn('The forces of evil have triumphed!');
