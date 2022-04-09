@@ -78,7 +78,7 @@ class Weapon {
     }
 }
 
-function weaponGenerator() {
+function weaponGenerator() {                                                //Added function weaponGenerator
     const weaponList = ['axe', 'sword', 'spear'];
     switch (weaponList[randomBetween(0 , weaponList.length - 1)]) {
         case 'axe':
@@ -98,16 +98,14 @@ function weaponGenerator() {
 function characterGenerator(type) {
     const hitpoints = randomBetween(40, 60);
     const armor = randomBetween(5, 15);
-    const strength = randomBetween(8, 12)
-
-    //TODO: Use weapon generator
-    //const weapon = weaponGenerator()
+    const strength = randomBetween(8, 12);
+    const weapon = weaponGenerator();                                       //Added weaponGenerator
 
 
     if (type.toLowerCase() === "hero") {
-        return new Hero(hitpoints, armor, strength);
+        return new Hero(hitpoints, armor, strength).setWeapon(weapon);
     } else if (type.toLowerCase() === "villain") {
-        return new Villain(hitpoints, armor, strength);
+        return new Villain(hitpoints, armor, strength).setWeapon(weapon);
     }
     console.error("'character type' is wrong");
 }
@@ -120,7 +118,6 @@ function teamGenerator(teamCount, teamClass) {
     return team;
 }
 
-console.log("TEAM GENERATOR: ", teamGenerator(5, "Hero"));
 
 function duel(attacker, victim) {
     attacker.attack(victim);
@@ -130,12 +127,16 @@ function duel(attacker, victim) {
 }
 
 function isTeamAlive (team) {
-    return team.every((person) => person.isAlive())
+    return team.every((person) => person.isAlive());
 }
-// console.log('Is team alive', isTeamAlive([new Hero(0)]))
+console.log('Filter:', asBytom([new Hero(10), new Hero(0), new Hero(10)]))
+
+// function asBytom(team) {                                                    //Added function as
+//     let
+//     return
+// }
 
 function battle(teamA, teamB) {
-
     while (isTeamAlive(teamA) && isTeamAlive(teamB)) {
         teamA.forEach((personA, index) => {
             duel(personA, teamB[index]);
@@ -146,8 +147,8 @@ function battle(teamA, teamB) {
 
 function gameInit() {
     //TODO: use teamGenerator
-    const teamA = [];
-    const teamB = [];
+    const teamA = teamGenerator(5, "hero");
+    const teamB = teamGenerator(5,"villain");
 
     // const axe = new Weapon(1, 8);
     // const sword = new Weapon(2, 6);
