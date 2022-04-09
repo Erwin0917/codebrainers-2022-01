@@ -48,7 +48,6 @@ class Person {
         const modifiers = [-2, -2, -2, -1, 0, 1, 2, 3, 4, 5];
         return modifiers[Math.floor(this.strength / 2)];
     }
-
 }
 
 class Hero extends Person {
@@ -68,39 +67,38 @@ class Villain extends Person {
 }
 
 class Weapon {
-    constructor(name, minDamage, maxDamage) {
+    constructor(name, minDamage = 0, maxDamage = 0) {
         this.name = name;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
     }
-
     getDamage() {
         return randomBetween(this.minDamage, this.maxDamage);
     }
 }
 
-const weaponList = ['axe', 'sword'];
-function weaponGenerator() {
-    //TODO: Finish function
+const weaponList = ['axe', 'sword', 'spear', 'bat', 'club','bare hands'];
+//maybe add min and max damage for each weapon
 
-    // new Weapon()
+function weaponGenerator(listOfWeapons) {
+    const minDamage = randomBetween(1,5);
+    const maxDamage = randomBetween(5,10);
+    const weapon = listOfWeapons[Math.floor(Math.random() * listOfWeapons.length)];
+    return new Weapon(weapon, minDamage, maxDamage);
 }
 
-function characterGenerator(type) {
+const characterList = [Hero, Villain];
+
+function characterGenerator(listOfCharacters) {
     const hitpoints = randomBetween(40, 60);
     const armor = randomBetween(5, 15);
     const strength = randomBetween(8, 12)
-
-    //TODO: Use weapon generator
-    //const weapon = weaponGenerator()
-
-
-    if (type.toLowerCase() === "hero") {
-        return new Hero(hitpoints, armor, strength);
-    } else if (type.toLowerCase() === "villain") {
-        return new Villain(hitpoints, armor, strength);
-    }
-    console.error("'character type' is wrong");
+    //DONE: Use weapon generator
+    const weapon = weaponGenerator(weaponList);
+    const character = listOfCharacters[Math.floor(Math.random() * listOfCharacters.length)];
+    const newChar = new character(hitpoints, armor, strength);
+    newChar.setWeapon(weapon);
+    return newChar;
 }
 
 function teamGenerator(teamCount, teamClass) {
@@ -110,8 +108,6 @@ function teamGenerator(teamCount, teamClass) {
     }
     return team;
 }
-
-console.log("TEAM GENERATOR: ", teamGenerator(5, "Hero"));
 
 function duel(attacker, victim) {
     attacker.attack(victim);
@@ -126,19 +122,20 @@ function isTeamAlive (team) {
 // console.log('Is team alive', isTeamAlive([new Hero(0)]))
 
 function battle(teamA, teamB) {
-
     while (isTeamAlive(teamA) && isTeamAlive(teamB)) {
         teamA.forEach((personA, index) => {
             duel(personA, teamB[index]);
         })
-
     }
 }
 
 function gameInit() {
-    //TODO: use teamGenerator
-    const teamA = [];
-    const teamB = [];
+    //Done: use teamGenerator
+    const teamA = teamGenerator(5, characterList);
+    const teamB = teamGenerator(5, characterList);
+
+    console.log("TeamA:", teamA);
+    console.log("TeamB:", teamB);
 
     // const axe = new Weapon(1, 8);
     // const sword = new Weapon(2, 6);
@@ -148,7 +145,7 @@ function gameInit() {
     // darkCharacter.setWeapon(sword);
     // darkLord.setWeapon(axe);
 
-    // battle(teamA, teamB);
+    battle(teamA, teamB);
 
     if (isTeamAlive(teamB)) {
         console.warn('The forces of evil have triumphed!');
