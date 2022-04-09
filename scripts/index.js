@@ -24,13 +24,13 @@ function battle(teamA, teamB) {
 
 function gameInit() {
     const gameController = new GameController();
-    const uiController = new UiController(document.querySelector('.game-wrapper'));
+    const uiController = new UiController(document.querySelector('.game-wrapper'),gameController);
 
     uiController.startBattleButton.addEventListener('click', function () {
-        battle(teamA, teamB)
+        battle(gameController.teamA, gameController.teamB)
     });
 
-    if (isTeamAlive(teamB)) {
+    if (isTeamAlive(gameController.teamB)) {
         console.warn('The forces of evil have triumphed!');
     } else {
         console.warn('You won your first fight.');
