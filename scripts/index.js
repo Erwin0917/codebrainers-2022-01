@@ -8,7 +8,6 @@ class Person {
         this.strength = 0;
         this.armorRating = 0;
         this.weapon = null;
-
     }
 
     attack(character) {
@@ -100,14 +99,16 @@ function characterGenerator(type) {
     const armor = randomBetween(5, 15);
     const strength = randomBetween(8, 12);
     const weapon = weaponGenerator();                                       //Added weaponGenerator
-
+    let character;
 
     if (type.toLowerCase() === "hero") {
-        return new Hero(hitpoints, armor, strength).setWeapon(weapon);
+        character = new Hero(hitpoints, armor, strength);
+
     } else if (type.toLowerCase() === "villain") {
-        return new Villain(hitpoints, armor, strength).setWeapon(weapon);
+        character = new Villain(hitpoints, armor, strength);
     }
-    console.error("'character type' is wrong");
+    character.setWeapon(weapon);
+    return character;
 }
 
 function teamGenerator(teamCount, teamClass) {
@@ -129,12 +130,6 @@ function duel(attacker, victim) {
 function isTeamAlive (team) {
     return team.every((person) => person.isAlive());
 }
-console.log('Filter:', asBytom([new Hero(10), new Hero(0), new Hero(10)]))
-
-// function asBytom(team) {                                                    //Added function as
-//     let
-//     return
-// }
 
 function battle(teamA, teamB) {
     while (isTeamAlive(teamA) && isTeamAlive(teamB)) {
@@ -158,7 +153,7 @@ function gameInit() {
     // darkCharacter.setWeapon(sword);
     // darkLord.setWeapon(axe);
 
-    // battle(teamA, teamB);
+    battle(teamA, teamB);
 
     if (isTeamAlive(teamB)) {
         console.warn('The forces of evil have triumphed!');
