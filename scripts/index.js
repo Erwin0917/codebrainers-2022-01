@@ -136,6 +136,8 @@ function battle(teamA, teamB) {
 function gameInit() {
     const gameWrapperHtml = document.querySelector('.game-wrapper');
     const startBattleButton = gameWrapperHtml.querySelector('#button-start-game');
+    const randomCharacterButton = gameWrapperHtml.querySelector('#button-random');
+    const selectTeamInput = gameWrapperHtml.querySelector('#select-team');
 
     const teamA = teamGenerator(5, characterList);
     const teamB = teamGenerator(5, characterList);
@@ -143,6 +145,13 @@ function gameInit() {
     startBattleButton.addEventListener('click', function () {
         battle(teamA, teamB)
     });
+    randomCharacterButton.addEventListener('click', function (){
+        const newCharacter = characterGenerator(characterList);
+        console.log('newCharacter', newCharacter);
+    })
+    selectTeamInput.addEventListener('change', function (event){
+        console.log ('event', event.target.value);
+    })
 
 
 
