@@ -137,12 +137,16 @@ function battle(teamA, teamB) {
 function gameInit() {
     const gameWrapperHtml = document.querySelector('.game-wrapper');
     const startBattleButton = gameWrapperHtml.querySelector('#button-start-game');
-    const randomCharacterButton = gameWrapperHtml.querySelector('#button-random');
-    const selectTeamInput = gameWrapperHtml.querySelector('#select-team');
-    const nameInput = gameWrapperHtml.querySelector('#input-name');
-    const hitPointsInput = gameWrapperHtml.querySelector('#input-hitPoints');
-    const strengthInput = gameWrapperHtml.querySelector('#input-strength');
-    const weaponNameInput = gameWrapperHtml.querySelector('#input-weaponName');
+    // const randomCharacterButton = gameWrapperHtml.querySelector('#button-random');
+    // const selectTeamInput = gameWrapperHtml.querySelector('#select-team');
+    // const nameInput = gameWrapperHtml.querySelector('#input-name');
+    // const hitPointsInput = gameWrapperHtml.querySelector('#input-hitPoints');
+    // const strengthInput = gameWrapperHtml.querySelector('#input-strength');
+    // const weaponNameInput = gameWrapperHtml.querySelector('#input-weaponName');
+    const teamCountInput = gameWrapperHtml.querySelector('#input-team-count');
+    const randomTeamsBtn = gameWrapperHtml.querySelector('#button-generate-teams');
+    const teamAWrapper = gameWrapperHtml.querySelector('#teamA-wrapper');
+    const teamBWrapper = gameWrapperHtml.querySelector('#teamB-wrapper');
 
     const teamA = teamGenerator(5, characterList);
     const teamB = teamGenerator(5, characterList);
@@ -150,17 +154,25 @@ function gameInit() {
     startBattleButton.addEventListener('click', function () {
         battle(teamA, teamB)
     });
-    randomCharacterButton.addEventListener('click', function (){
-        const newCharacter = characterGenerator(characterList);
-        nameInput.value = newCharacter.name;
-        hitPointsInput.value = newCharacter.hitPoints;
-        strengthInput.value = newCharacter.strength;
-        weaponNameInput.value = newCharacter.weapon.name;
-        console.log('newCharacter', newCharacter);
+    // randomCharacterButton.addEventListener('click', function (){
+    //     const newCharacter = characterGenerator(characterList);
+    //     nameInput.value = newCharacter.name;
+    //     hitPointsInput.value = newCharacter.hitPoints;
+    //     strengthInput.value = newCharacter.strength;
+    //     weaponNameInput.value = newCharacter.weapon.name;
+    //     console.log('newCharacter', newCharacter);
+    // })
+    // selectTeamInput.addEventListener('change', function (event){
+    //     console.log ('event', event.target.value);
+    // })
+    randomTeamsBtn.addEventListener('click', function (){
+        const enteredTeamCount = teamCountInput.value;
+        const teamA = teamGenerator(enteredTeamCount, characterList);
+        const teamB = teamGenerator(enteredTeamCount, characterList);
+        teamAWrapper.innerHTML = JSON.stringify(teamA);
+        teamBWrapper.innerHTML = JSON.stringify(teamB);
     })
-    selectTeamInput.addEventListener('change', function (event){
-        console.log ('event', event.target.value);
-    })
+
 
 
 
