@@ -2,3 +2,29 @@
     padding: 25px;
     margin-bottom: 550px;
 }
+
+.rpgui-content {
+    position: relative;
+}
+
+.rpgui-container.game-board {
+    position: relative;
+    margin: 40px 0;
+}
+
+.game-board {
+    display: flex;
+    justify-content: space-between;
+}
+
+.team-wrapper {
+    flex-basis: 45%;
+}
+
+.character-card.rpgui-container {
+    position: relative;
+    color: #fff;
+    text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
+    font-size: 1em;
+}
+

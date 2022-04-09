@@ -68,7 +68,7 @@ export class Villain extends Person {
 
 export const characterList = [Hero, Villain];
 
-function characterGenerator(listOfCharacters) {
+export function characterGenerator(listOfCharacters) {
     const hitpoints = randomBetween(40, 60);
     const armor = randomBetween(5, 15);
     const strength = randomBetween(8, 12)

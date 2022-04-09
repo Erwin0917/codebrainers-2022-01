@@ -1,4 +1,3 @@
-import { characterList, teamGenerator } from './character.js';
 import { UiController } from './uiController.js';
 import { GameController } from './gameController.js';
 
@@ -23,11 +22,15 @@ function battle(teamA, teamB) {
 }
 
 function gameInit() {
+    const gameWrapperHtml = document.querySelector('.game-wrapper');
+
     const gameController = new GameController();
-    const uiController = new UiController(document.querySelector('.game-wrapper'),gameController);
+    const uiController = new UiController(gameWrapperHtml, gameController);
 
     uiController.startBattleButton.addEventListener('click', function () {
-        battle(gameController.teamA, gameController.teamB)
+        // battle(gameController.teamA, gameController.teamB)
+        var progress = document.getElementById("red-bar");
+	    RPGUI.set_value(progress, 0.5);
     });
 
     if (isTeamAlive(gameController.teamB)) {
@@ -35,6 +38,8 @@ function gameInit() {
     } else {
         console.warn('You won your first fight.');
     }
+
 }
 
 gameInit();
+
