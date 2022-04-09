@@ -3,11 +3,12 @@ function randomBetween(min, max) {
 }
 
 class Person {
-    constructor(hitPoints) {
+    constructor(hitPoints, name) {
         this.hitPoints = hitPoints;
         this.strength = 0;
         this.armorRating = 0;
         this.weapon = null;
+        this.name = name;
 
     }
 
@@ -52,7 +53,7 @@ class Person {
 
 class Hero extends Person {
     constructor(hitPoints, armorRating, strength) {
-        super(hitPoints);
+        super(hitPoints, 'Hero');
         this.armorRating = armorRating;
         this.strength = strength;
     }
@@ -60,7 +61,7 @@ class Hero extends Person {
 
 class Villain extends Person {
     constructor(hitPoints, armorRating, strength) {
-        super(hitPoints);
+        super(hitPoints, 'Villain');
         this.armorRating = armorRating;
         this.strength = strength;
     }
@@ -138,6 +139,10 @@ function gameInit() {
     const startBattleButton = gameWrapperHtml.querySelector('#button-start-game');
     const randomCharacterButton = gameWrapperHtml.querySelector('#button-random');
     const selectTeamInput = gameWrapperHtml.querySelector('#select-team');
+    const nameInput = gameWrapperHtml.querySelector('#input-name');
+    const hitPointsInput = gameWrapperHtml.querySelector('#input-hitPoints');
+    const strengthInput = gameWrapperHtml.querySelector('#input-strength');
+    const weaponNameInput = gameWrapperHtml.querySelector('#input-weaponName');
 
     const teamA = teamGenerator(5, characterList);
     const teamB = teamGenerator(5, characterList);
@@ -147,6 +152,10 @@ function gameInit() {
     });
     randomCharacterButton.addEventListener('click', function (){
         const newCharacter = characterGenerator(characterList);
+        nameInput.value = newCharacter.name;
+        hitPointsInput.value = newCharacter.hitPoints;
+        strengthInput.value = newCharacter.strength;
+        weaponNameInput.value = newCharacter.weapon.name;
         console.log('newCharacter', newCharacter);
     })
     selectTeamInput.addEventListener('change', function (event){
