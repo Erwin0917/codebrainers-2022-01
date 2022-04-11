@@ -41,13 +41,16 @@ export class UiController {
 
     renderTeams = (teamA, teamB) => {
         this.deleteTeamsFromHTML();
+        let title = this.addTeamName("Team A");
+        this.teamAWrapper.appendChild(title);
         teamA.forEach(character => {
             const card = generateCharacterCard(character);
             this.teamAWrapper.appendChild(card);
-
         });
-
         //DONE: Create Team B
+
+        title = this.addTeamName("Team B");
+        this.teamBWrapper.appendChild(title);
         teamB.forEach(character => {
             const card = generateCharacterCard(character);
             this.teamBWrapper.appendChild(card);
@@ -55,6 +58,13 @@ export class UiController {
         });
 
 
+    }
+
+    addTeamName = (teamName) => {
+        const addHeader = document.createElement('h3');
+        addHeader.classList.add('team-header');
+        addHeader.innerText = `${teamName}`;
+        return addHeader;
     }
 
 }
