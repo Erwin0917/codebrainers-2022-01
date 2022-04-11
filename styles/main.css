@@ -7,11 +7,11 @@
 }
 
 .game-controller {
+    width: 100%;
     display: flex;
     justify-content: center;
-
+    align-self: center;
     flex-direction: column;
-
 }
 
 .rpgui-content {
@@ -34,6 +34,10 @@
 
 .teams-sizes {
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
 }
 .teams-sizes-title {
     color: #fff;
@@ -52,4 +56,11 @@
 
 .character-card.rpgui-container:last-child {
     margin: 0;
+}
+
+.start-buttons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

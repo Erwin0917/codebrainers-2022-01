@@ -41,23 +41,23 @@ export class UiController {
 
     renderTeams = (teamA, teamB) => {
         this.deleteTeamsFromHTML();
-        let title = this.addTeamName("Team A");
-        this.teamAWrapper.appendChild(title);
-        teamA.forEach(character => {
-            const card = generateCharacterCard(character);
-            this.teamAWrapper.appendChild(card);
-        });
-        //DONE: Create Team B
+        if (teamA.length > 0) {
+            let title = this.addTeamName("Team A");
+            this.teamAWrapper.appendChild(title);
+            teamA.forEach(character => {
+                const card = generateCharacterCard(character);
+                this.teamAWrapper.appendChild(card);
+            });
+        }
 
-        title = this.addTeamName("Team B");
-        this.teamBWrapper.appendChild(title);
-        teamB.forEach(character => {
-            const card = generateCharacterCard(character);
-            this.teamBWrapper.appendChild(card);
-
-        });
-
-
+        if (teamB.length > 0) {
+            let title = this.addTeamName("Team B");
+            this.teamBWrapper.appendChild(title);
+            teamB.forEach(character => {
+                const card = generateCharacterCard(character);
+                this.teamBWrapper.appendChild(card);
+            });
+        }
     }
 
     addTeamName = (teamName) => {
