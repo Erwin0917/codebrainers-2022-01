@@ -37,14 +37,21 @@ export class UiController {
 
         });
 
-        //TODO: Create Team B
+        //DONE: Create Team B
+        teamB.forEach(character => {
+            const card = generateCharacterCard(character);
+            this.teamBWrapper.appendChild(card);
+
+        });
+
+
     }
 
 }
 
 function generateCharacterCard(character) {
     const characterCard = document.createElement('div');
-    console.log(character)
+
     characterCard.classList.add('character-card', 'rpgui-container', 'framed-golden');
 
     characterCard.innerHTML = `
@@ -57,12 +64,39 @@ function generateCharacterCard(character) {
     const progressBar = document.createElement('div');
     progressBar.classList.add('progress-wrapper');
     const label = document.createElement('label');
-    label.innerText = 'HP';
+    label.innerText = 'HP:';
+    const labelTwo = document.createElement('label');
+    labelTwo.innerText = 'Second bar:';
+    // const progressInner = RPGUI.create('rpgui-progress green', 'progress');
     const progressInner = document.createElement('div');
-    progressInner.classList.add('rpgui-progress', 'red');
+    const percentHealth = Math.floor(character.hitPoints/character.maxValueOfHitPoints) * 100;
+    progressInner.classList.add('progress-wrapper');
+    progressInner.innerHTML = `
+    <div class="rpgui-progress green" data-rpguitype="progress" style="margin: 10px 0">
+        <div class=" rpgui-progress-track">
+            <div class=" rpgui-progress-fill red" style="left: 0px; width: ${percentHealth}%;"></div>
+        </div>
+        <div class=" rpgui-progress-left-edge"></div>
+        <div class=" rpgui-progress-right-edge"></div>
+    </div>
+    `
+    const secondBar = document.createElement('div');
+
+    secondBar.classList.add('progress-wrapper');
+    secondBar.innerHTML = `
+    <div class="rpgui-progress green" data-rpguitype="progress">
+        <div class=" rpgui-progress-track">
+            <div class=" rpgui-progress-fill green" style="left: 0px; width: ${percentHealth}%;"></div>
+        </div>
+        <div class=" rpgui-progress-left-edge"></div>
+        <div class=" rpgui-progress-right-edge"></div>
+    </div>
+    `
 
     progressBar.appendChild(label);
     progressBar.appendChild(progressInner);
+    progressBar.appendChild(labelTwo);
+    progressBar.appendChild(secondBar);
     characterCard.appendChild(progressBar);
 
     // <div className='progress-wrapper'>
@@ -79,5 +113,3 @@ function generateCharacterCard(character) {
 }
 
 
-
-console.log(generateCharacterCard(characterGenerator(characterList)))

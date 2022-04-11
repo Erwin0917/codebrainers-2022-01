@@ -19,21 +19,6 @@
             </div>
 
             <div class='teamB-wrapper team-wrapper' id='teamB-wrapper'>
-                <div class='character-card rpgui-container framed-golden'>
-                    <div class='name'>Hero</div>
-                    <div class='hp'>100</div>
-                    <div class='strength'>50</div>
-                    <div class='weapon-name'>Axe</div>
-                    <div class='progress-wrapper'>
-                        <label>HP:</label>
-                        <div class='rpgui-progress red' ></div>
-                    </div>
-
-                    <div class='progress-wrapper'>
-                        <label>Strength:</label>
-                        <div class='rpgui-progress green' ></div>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -44,7 +29,8 @@
             <!--            <input type='text' value='Test input' id="input-hitPoints">-->
             <!--            <input type='text' value='Test input' id="input-strength">-->
             <!--            <input type='text' value='Test input' id="input-weaponName">-->
-            <input type='number' value='5' id='input-team-count'>
+<!--            <input type='number' value='5' >-->
+            <input class='rpgui-slider golden' id='input-team-count' type='range' min='0' max='10' value='3'>
 
             <!--            <button class="rpgui-button" id='button-random' type="button"><p>Random character</p></button>-->
             <button class='rpgui-button' id='button-generate-teams' type='button'><p>Generate random teams</p></button>
