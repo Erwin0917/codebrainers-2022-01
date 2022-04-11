@@ -30,7 +30,17 @@ export class UiController {
         // this.teamBWrapper.innerHTML = JSON.stringify(this.gameController.teamB);
     }
 
+    deleteTeamsFromHTML = () => {
+        while(this.teamAWrapper.firstChild) {
+            this.teamAWrapper.removeChild(this.teamAWrapper.firstChild);
+        }
+        while(this.teamBWrapper.firstChild) {
+            this.teamBWrapper.removeChild(this.teamBWrapper.firstChild);
+        }
+    }
+
     renderTeams = (teamA, teamB) => {
+        this.deleteTeamsFromHTML();
         teamA.forEach(character => {
             const card = generateCharacterCard(character);
             this.teamAWrapper.appendChild(card);
