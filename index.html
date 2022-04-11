@@ -12,10 +12,11 @@
 </head>
 <body>
 <div class='rpgui-content'>
-    <div class='game-wrapper'>
+    <div class='game-wrapper rpgui-container framed-golden'>
 
         <div class='game-board rpgui-container framed'>
             <div class='teamA-wrapper team-wrapper' id='teamA-wrapper'>
+
             </div>
 
             <div class='teamB-wrapper team-wrapper' id='teamB-wrapper'>
@@ -30,8 +31,10 @@
             <!--            <input type='text' value='Test input' id="input-strength">-->
             <!--            <input type='text' value='Test input' id="input-weaponName">-->
 <!--            <input type='number' value='5' >-->
-            <input class='rpgui-slider golden' id='input-team-count' type='range' min='0' max='10' value='3'>
-
+            <div class="teams-sizes">
+                <div>Size of teams:</div>
+                <input class='rpgui-slider golden' id='input-team-count' type='range' min='0' max='10' value='3'>
+            </div>
             <!--            <button class="rpgui-button" id='button-random' type="button"><p>Random character</p></button>-->
             <button class='rpgui-button' id='button-generate-teams' type='button'><p>Generate random teams</p></button>
             <button class='rpgui-button golden' id='button-start-game' type='button'><p>Start game</p></button>

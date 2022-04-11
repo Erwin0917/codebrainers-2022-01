@@ -1,6 +1,17 @@
 .game-wrapper {
     padding: 25px;
     margin-bottom: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.game-controller {
+    display: flex;
+    justify-content: center;
+
+    flex-direction: column;
+
 }
 
 .rpgui-content {
@@ -19,6 +30,10 @@
 
 .team-wrapper {
     flex-basis: 45%;
+}
+
+.teams-sizes {
+    width: 50%;
 }
 
 .character-card.rpgui-container {
