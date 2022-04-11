@@ -39,6 +39,8 @@ export class UiController {
         }
     }
 
+
+
     renderTeams = (teamA, teamB) => {
         this.deleteTeamsFromHTML();
         if (teamA.length > 0) {
@@ -86,15 +88,15 @@ function generateCharacterCard(character) {
     const label = document.createElement('label');
     label.innerText = 'HP:';
     const labelTwo = document.createElement('label');
-    labelTwo.innerText = 'Second bar:';
+    labelTwo.innerText = 'Second bar with HP:';
     // const progressInner = RPGUI.create('rpgui-progress green', 'progress');
     const progressInner = document.createElement('div');
-    const percentHealth = Math.floor(character.hitPoints/character.maxValueOfHitPoints) * 100;
+
     progressInner.classList.add('progress-wrapper');
     progressInner.innerHTML = `
     <div class="rpgui-progress green" data-rpguitype="progress" style="margin: 10px 0">
         <div class=" rpgui-progress-track">
-            <div class=" rpgui-progress-fill red" style="left: 0px; width: ${percentHealth}%;"></div>
+            <div class=" rpgui-progress-fill red" style="left: 0px; width: ${character.percentHealth}%;"></div>
         </div>
         <div class=" rpgui-progress-left-edge"></div>
         <div class=" rpgui-progress-right-edge"></div>
@@ -106,7 +108,7 @@ function generateCharacterCard(character) {
     secondBar.innerHTML = `
     <div class="rpgui-progress green" data-rpguitype="progress">
         <div class=" rpgui-progress-track">
-            <div class=" rpgui-progress-fill green" style="left: 0px; width: ${percentHealth}%;"></div>
+            <div class=" rpgui-progress-fill green" style="left: 0px; width: ${character.percentHealth}%;"></div>
         </div>
         <div class=" rpgui-progress-left-edge"></div>
         <div class=" rpgui-progress-right-edge"></div>
