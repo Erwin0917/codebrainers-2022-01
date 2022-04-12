@@ -13,11 +13,13 @@ export class UiController {
         this.randomTeamsBtn = gameWrapperHtml.querySelector('#button-generate-teams');
         this.teamAWrapper = gameWrapperHtml.querySelector('#teamA-wrapper');
         this.teamBWrapper = gameWrapperHtml.querySelector('#teamB-wrapper');
+        this.teamSizeElement = gameWrapperHtml.querySelector('#size-teams');
         this.initListeners();
     }
 
     initListeners() {
-        this.randomTeamsBtn.addEventListener('click', this.onClickRandomHandler)
+        this.randomTeamsBtn.addEventListener('click', this.onClickRandomHandler);
+        this.teamCountInput.addEventListener('change', this.updateTeamSize);
     }
 
     onClickRandomHandler = () => {
@@ -25,40 +27,30 @@ export class UiController {
         this.gameController.teamA = teamGenerator(enteredTeamCount, characterList);
         this.gameController.teamB = teamGenerator(enteredTeamCount, characterList);
         this.renderTeams(this.gameController.teamA, this.gameController.teamB);
-
-        // this.teamAWrapper.innerHTML = JSON.stringify(this.gameController.teamA);
-        // this.teamBWrapper.innerHTML = JSON.stringify(this.gameController.teamB);
     }
 
     deleteTeamsFromHTML = () => {
-        while(this.teamAWrapper.firstChild) {
-            this.teamAWrapper.removeChild(this.teamAWrapper.firstChild);
-        }
-        while(this.teamBWrapper.firstChild) {
-            this.teamBWrapper.removeChild(this.teamBWrapper.firstChild);
-        }
+        this.teamAWrapper.innerHTML = ``;
+        this.teamBWrapper.innerHTML = ``;
     }
 
-
+    renderTeam = (team, teamName, teamWrapper) => {
+        let title = this.addTeamName(teamName);
+        teamWrapper.appendChild(title);
+        team.forEach(character => {
+            const card = generateCharacterCard(character);
+            teamWrapper.appendChild(card);
+        });
+    }
 
     renderTeams = (teamA, teamB) => {
         this.deleteTeamsFromHTML();
         if (teamA.length > 0) {
-            let title = this.addTeamName("Team A");
-            this.teamAWrapper.appendChild(title);
-            teamA.forEach(character => {
-                const card = generateCharacterCard(character);
-                this.teamAWrapper.appendChild(card);
-            });
+            this.renderTeam(teamA, "Team A", this.teamAWrapper);
         }
 
         if (teamB.length > 0) {
-            let title = this.addTeamName("Team B");
-            this.teamBWrapper.appendChild(title);
-            teamB.forEach(character => {
-                const card = generateCharacterCard(character);
-                this.teamBWrapper.appendChild(card);
-            });
+            this.renderTeam(teamB, "Team B", this.teamBWrapper);
         }
     }
 
@@ -69,67 +61,42 @@ export class UiController {
         return addHeader;
     }
 
+    updateTeamSize = (event) => {
+        const value = event.target.value;
+        this.teamSizeElement.innerText = value;
+    }
+
+}
+
+function generateProgressBar(labelName, color){
+    const progressBar = document.createElement('div');
+    progressBar.classList.add('progress-wrapper');
+    const label = document.createElement('label');
+    label.innerText = labelName;
+    const progressInner = document.createElement('div');
+    progressInner.classList.add('rpgui-progress', color );
+
+    progressBar.appendChild(label);
+    progressBar.appendChild(progressInner);
+
+    RPGUI.create(progressInner, 'progress');
+    return progressBar;
 }
 
 function generateCharacterCard(character) {
     const characterCard = document.createElement('div');
-
     characterCard.classList.add('character-card', 'rpgui-container', 'framed-golden');
-
     characterCard.innerHTML = `
         <div class='name'>Name: <h4>${character.name}</h4></div>
         <div class='hp'>Hit points: <h4>${character.hitPoints}</h4></div>
         <div class='strength'>Strength: <h4>${character.strength}</h4></div>
         <div class='weapon-name'>Weapon Name: <h4>${character.weapon.name}</h4></div>
     `;
+    const hpProgressBar = generateProgressBar("HP:", "red");
+    const armorProgressBar = generateProgressBar("Armor:", "blue");
 
-    const progressBar = document.createElement('div');
-    progressBar.classList.add('progress-wrapper');
-    const label = document.createElement('label');
-    label.innerText = 'HP:';
-    const labelTwo = document.createElement('label');
-    labelTwo.innerText = 'Second bar with HP:';
-    // const progressInner = RPGUI.create('rpgui-progress green', 'progress');
-    const progressInner = document.createElement('div');
-
-    progressInner.classList.add('progress-wrapper');
-    progressInner.innerHTML = `
-    <div class="rpgui-progress green" data-rpguitype="progress" style="margin: 10px 0">
-        <div class=" rpgui-progress-track">
-            <div class=" rpgui-progress-fill red" style="left: 0px; width: ${character.percentHealth}%;"></div>
-        </div>
-        <div class=" rpgui-progress-left-edge"></div>
-        <div class=" rpgui-progress-right-edge"></div>
-    </div>
-    `
-    const secondBar = document.createElement('div');
-
-    secondBar.classList.add('progress-wrapper');
-    secondBar.innerHTML = `
-    <div class="rpgui-progress green" data-rpguitype="progress">
-        <div class=" rpgui-progress-track">
-            <div class=" rpgui-progress-fill green" style="left: 0px; width: ${character.percentHealth}%;"></div>
-        </div>
-        <div class=" rpgui-progress-left-edge"></div>
-        <div class=" rpgui-progress-right-edge"></div>
-    </div>
-    `
-
-    progressBar.appendChild(label);
-    progressBar.appendChild(progressInner);
-    progressBar.appendChild(labelTwo);
-    progressBar.appendChild(secondBar);
-    characterCard.appendChild(progressBar);
-
-    // <div className='progress-wrapper'>
-    //     <label>HP:</label>
-    //     <div className='rpgui-progress red'></div>
-    // </div>
-    //
-    // <div className='progress-wrapper'>
-    //     <label>Strength:</label>
-    //     <div className='rpgui-progress green'></div>
-    // </div>
+    characterCard.appendChild(hpProgressBar);
+    characterCard.appendChild(armorProgressBar);
 
     return characterCard;
 }

@@ -28,9 +28,7 @@ function gameInit() {
     const uiController = new UiController(gameWrapperHtml, gameController);
 
     uiController.startBattleButton.addEventListener('click', function () {
-        // battle(gameController.teamA, gameController.teamB)
-        var progress = document.getElementById("red-bar");
-	    RPGUI.set_value(progress, 0.5);
+        battle(gameController.teamA, gameController.teamB);
     });
 
     if (isTeamAlive(gameController.teamB)) {
