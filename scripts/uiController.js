@@ -1,13 +1,10 @@
-import { teamGenerator, characterList, characterGenerator } from './character.js';
-
 export class UiController {
-    constructor(gameWrapperHtml, gameController) {
+    constructor(gameWrapperHtml) {
 
         if (gameWrapperHtml === undefined) {
             throw new Error('Game wrapper html is wrong or undefined in UiController');
         }
         this.gameWrapperHtml = gameWrapperHtml;
-        this.gameController = gameController;
         this.startBattleButton = gameWrapperHtml.querySelector('#button-start-game');
         this.teamCountInput = gameWrapperHtml.querySelector('#input-team-count');
         this.randomTeamsBtn = gameWrapperHtml.querySelector('#button-generate-teams');
@@ -18,15 +15,7 @@ export class UiController {
     }
 
     initListeners() {
-        this.randomTeamsBtn.addEventListener('click', this.onClickRandomHandler);
         this.teamCountInput.addEventListener('change', this.updateTeamSize);
-    }
-
-    onClickRandomHandler = () => {
-        const enteredTeamCount = this.teamCountInput.value;
-        this.gameController.teamA = teamGenerator(enteredTeamCount, characterList);
-        this.gameController.teamB = teamGenerator(enteredTeamCount, characterList);
-        this.renderTeams(this.gameController.teamA, this.gameController.teamB);
     }
 
     deleteTeamsFromHTML = () => {
@@ -68,7 +57,7 @@ export class UiController {
 
 }
 
-function generateProgressBar(labelName, color){
+function generateProgressBar(labelName, color, value){
     const progressBar = document.createElement('div');
     progressBar.classList.add('progress-wrapper');
     const label = document.createElement('label');
@@ -80,6 +69,7 @@ function generateProgressBar(labelName, color){
     progressBar.appendChild(progressInner);
 
     RPGUI.create(progressInner, 'progress');
+    RPGUI.set_value(progressInner, value);
     return progressBar;
 }
 
@@ -92,7 +82,7 @@ function generateCharacterCard(character) {
         <div class='strength'>Strength: <h4>${character.strength}</h4></div>
         <div class='weapon-name'>Weapon Name: <h4>${character.weapon.name}</h4></div>
     `;
-    const hpProgressBar = generateProgressBar("HP:", "red");
+    const hpProgressBar = generateProgressBar("HP:", "red", character.getPercentHealth());
     const armorProgressBar = generateProgressBar("Armor:", "blue");
 
     characterCard.appendChild(hpProgressBar);
@@ -100,5 +90,4 @@ function generateCharacterCard(character) {
 
     return characterCard;
 }
-
 

@@ -5,7 +5,7 @@ export class Person {
     constructor(hitPoints, name) {
         this.hitPoints = hitPoints;
         this.maxValueOfHitPoints = hitPoints;
-        this.percentHealth = Math.floor(this.hitPoints/this.maxValueOfHitPoints) * 100;
+        // this.percentHealth = Math.floor(this.hitPoints/this.maxValueOfHitPoints) * 100;
         this.strength = 0;
         this.armorRating = 0;
         this.weapon = null;
@@ -32,6 +32,10 @@ export class Person {
             character.hitPoints = healthPool;
         }
         console.log(`The hit rolled for ${attackQuality}, including +${this.attackModifier()} attack modifier. Damage was ${damage}.`);
+    }
+
+    getPercentHealth() {
+        return (this.hitPoints / this.maxValueOfHitPoints);
     }
 
     isAlive() {

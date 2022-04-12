@@ -1,41 +1,31 @@
 import { UiController } from './uiController.js';
 import { GameController } from './gameController.js';
+import {characterList, teamGenerator} from "./character.js";
 
-
-function duel(attacker, victim) {
-    attacker.attack(victim);
-    if (victim.isAlive()) {
-        victim.attack(attacker);
-    }
-}
-
-function isTeamAlive(team) {
-    return team.every((person) => person.isAlive())
-}
-
-function battle(teamA, teamB) {
-    while (isTeamAlive(teamA) && isTeamAlive(teamB)) {
-        teamA.forEach((personA, index) => {
-            duel(personA, teamB[index]);
-        })
-    }
-}
 
 function gameInit() {
     const gameWrapperHtml = document.querySelector('.game-wrapper');
 
-    const gameController = new GameController();
-    const uiController = new UiController(gameWrapperHtml, gameController);
+    const uiController = new UiController(gameWrapperHtml);
+    const gameController = new GameController(uiController);
+
 
     uiController.startBattleButton.addEventListener('click', function () {
-        battle(gameController.teamA, gameController.teamB);
+        gameController.battle(gameController.teamA, gameController.teamB);
     });
 
-    if (isTeamAlive(gameController.teamB)) {
-        console.warn('The forces of evil have triumphed!');
-    } else {
-        console.warn('You won your first fight.');
-    }
+    uiController.randomTeamsBtn.addEventListener('click', function () {
+            const enteredTeamCount = uiController.teamCountInput.value;
+            gameController.teamA = teamGenerator(enteredTeamCount, characterList);
+            gameController.teamB = teamGenerator(enteredTeamCount, characterList);
+            uiController.renderTeams(gameController.teamA, gameController.teamB);
+    })
+
+    // if (isTeamAlive(gameController.teamB)) {
+    //     console.warn('The forces of evil have triumphed!');
+    // } else {
+    //     console.warn('You won your first fight.');
+    // }
 
 }
 
