@@ -1,6 +1,18 @@
 .game-wrapper {
     padding: 25px;
     margin-bottom: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+.game-controller {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
 }
 
 .rpgui-content {
@@ -21,10 +33,37 @@
     flex-basis: 45%;
 }
 
+.teams-sizes {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+}
+
+.teams-sizes-title {
+    color: #fff;
+    text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
+    font-size: 1em;
+    text-align: center;
+}
+
 .character-card.rpgui-container {
     position: relative;
     color: #fff;
     text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
     font-size: 1em;
+    margin: 0 0 10px 0;
+    padding: 20px 10px 20px 10px;
 }
 
+.character-card.rpgui-container:last-child {
+    margin: 0;
+}
+
+.start-buttons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

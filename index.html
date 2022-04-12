@@ -10,30 +10,21 @@
     <style>
     </style>
 </head>
+
 <body>
 <div class='rpgui-content'>
-    <div class='game-wrapper'>
+    <div class='game-wrapper rpgui-container framed-golden'>
 
         <div class='game-board rpgui-container framed'>
+
             <div class='teamA-wrapper team-wrapper' id='teamA-wrapper'>
+
             </div>
 
-            <div class='teamB-wrapper team-wrapper' id='teamB-wrapper'>
-                <div class='character-card rpgui-container framed-golden'>
-                    <div class='name'>Hero</div>
-                    <div class='hp'>100</div>
-                    <div class='strength'>50</div>
-                    <div class='weapon-name'>Axe</div>
-                    <div class='progress-wrapper'>
-                        <label>HP:</label>
-                        <div class='rpgui-progress red' ></div>
-                    </div>
+            <h1>Time to play the Game!</h1>
 
-                    <div class='progress-wrapper'>
-                        <label>Strength:</label>
-                        <div class='rpgui-progress green' ></div>
-                    </div>
-                </div>
+            <div class='teamB-wrapper team-wrapper' id='teamB-wrapper'>
+
             </div>
 
         </div>
@@ -44,12 +35,16 @@
             <!--            <input type='text' value='Test input' id="input-hitPoints">-->
             <!--            <input type='text' value='Test input' id="input-strength">-->
             <!--            <input type='text' value='Test input' id="input-weaponName">-->
-            <input type='number' value='5' id='input-team-count'>
-
+<!--            <input type='number' value='5' >-->
+            <div class="teams-sizes">
+                <div class="teams-sizes-title">Size of teams:</div>
+                <input class='rpgui-slider golden' id='input-team-count' type='range' min='0' max='10' value='3'>
+            </div>
+            <div class="start-buttons">
             <!--            <button class="rpgui-button" id='button-random' type="button"><p>Random character</p></button>-->
-            <button class='rpgui-button' id='button-generate-teams' type='button'><p>Generate random teams</p></button>
-            <button class='rpgui-button golden' id='button-start-game' type='button'><p>Start game</p></button>
-
+                <button class='rpgui-button' id='button-generate-teams' type='button'><p>Generate random teams</p></button>
+                <button class='rpgui-button golden' id='button-start-game' type='button'><p>Start game</p></button>
+            </div>
             <!--            <select class='rpgui-dropdown' id="select-team">-->
             <!--                <option value='teamA'>Team A</option>-->
             <!--                <option value='teamB'>Team B</option>-->

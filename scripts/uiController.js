@@ -30,21 +30,50 @@ export class UiController {
         // this.teamBWrapper.innerHTML = JSON.stringify(this.gameController.teamB);
     }
 
+    deleteTeamsFromHTML = () => {
+        while(this.teamAWrapper.firstChild) {
+            this.teamAWrapper.removeChild(this.teamAWrapper.firstChild);
+        }
+        while(this.teamBWrapper.firstChild) {
+            this.teamBWrapper.removeChild(this.teamBWrapper.firstChild);
+        }
+    }
+
+
+
     renderTeams = (teamA, teamB) => {
-        teamA.forEach(character => {
-            const card = generateCharacterCard(character);
-            this.teamAWrapper.appendChild(card);
+        this.deleteTeamsFromHTML();
+        if (teamA.length > 0) {
+            let title = this.addTeamName("Team A");
+            this.teamAWrapper.appendChild(title);
+            teamA.forEach(character => {
+                const card = generateCharacterCard(character);
+                this.teamAWrapper.appendChild(card);
+            });
+        }
 
-        });
+        if (teamB.length > 0) {
+            let title = this.addTeamName("Team B");
+            this.teamBWrapper.appendChild(title);
+            teamB.forEach(character => {
+                const card = generateCharacterCard(character);
+                this.teamBWrapper.appendChild(card);
+            });
+        }
+    }
 
-        //TODO: Create Team B
+    addTeamName = (teamName) => {
+        const addHeader = document.createElement('h3');
+        addHeader.classList.add('team-header');
+        addHeader.innerText = `${teamName}`;
+        return addHeader;
     }
 
 }
 
 function generateCharacterCard(character) {
     const characterCard = document.createElement('div');
-    console.log(character)
+
     characterCard.classList.add('character-card', 'rpgui-container', 'framed-golden');
 
     characterCard.innerHTML = `
@@ -57,12 +86,39 @@ function generateCharacterCard(character) {
     const progressBar = document.createElement('div');
     progressBar.classList.add('progress-wrapper');
     const label = document.createElement('label');
-    label.innerText = 'HP';
+    label.innerText = 'HP:';
+    const labelTwo = document.createElement('label');
+    labelTwo.innerText = 'Second bar with HP:';
+    // const progressInner = RPGUI.create('rpgui-progress green', 'progress');
     const progressInner = document.createElement('div');
-    progressInner.classList.add('rpgui-progress', 'red');
+
+    progressInner.classList.add('progress-wrapper');
+    progressInner.innerHTML = `
+    <div class="rpgui-progress green" data-rpguitype="progress" style="margin: 10px 0">
+        <div class=" rpgui-progress-track">
+            <div class=" rpgui-progress-fill red" style="left: 0px; width: ${character.percentHealth}%;"></div>
+        </div>
+        <div class=" rpgui-progress-left-edge"></div>
+        <div class=" rpgui-progress-right-edge"></div>
+    </div>
+    `
+    const secondBar = document.createElement('div');
+
+    secondBar.classList.add('progress-wrapper');
+    secondBar.innerHTML = `
+    <div class="rpgui-progress green" data-rpguitype="progress">
+        <div class=" rpgui-progress-track">
+            <div class=" rpgui-progress-fill green" style="left: 0px; width: ${character.percentHealth}%;"></div>
+        </div>
+        <div class=" rpgui-progress-left-edge"></div>
+        <div class=" rpgui-progress-right-edge"></div>
+    </div>
+    `
 
     progressBar.appendChild(label);
     progressBar.appendChild(progressInner);
+    progressBar.appendChild(labelTwo);
+    progressBar.appendChild(secondBar);
     characterCard.appendChild(progressBar);
 
     // <div className='progress-wrapper'>
@@ -79,5 +135,3 @@ function generateCharacterCard(character) {
 }
 
 
-
-console.log(generateCharacterCard(characterGenerator(characterList)))
