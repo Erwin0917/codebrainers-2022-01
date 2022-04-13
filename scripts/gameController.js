@@ -28,7 +28,17 @@ export class GameController {
 }
 
 const findOpponent = (team) => {
-    return team.find((person) => person.isAlive())
+    let randomOpponent = team[randomBetween(0, team.length - 1)];
+    while (!randomOpponent.isAlive()) { 
+        randomOpponent = team[randomBetween(0, team.length - 1)];
+        if (isTeamDead(team)) {
+            break;
+        }
+    }    
+    console.log("Random oponent:", randomOpponent);
+    console.log("is he alive?:", randomOpponent.isAlive);
+    return randomOpponent;
+    // return team.find((person) => person.isAlive())
 }
 
 function duel(attacker, victim) {
