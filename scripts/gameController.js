@@ -7,7 +7,7 @@ export class GameController {
         this.uiController = uiController;
     }
 
-    battle() {
+    async battle() {
         while (!isTeamDead(this.teamA) && !isTeamDead(this.teamB)) {
             if (randomBetween(0, 1) === 0) {
                 this.teamA.forEach((personA, index) => {
@@ -26,6 +26,9 @@ export class GameController {
                     this.uiController.renderTeams(this.teamA, this.teamB);
                 })
             }
+
+            await timeout(200);
+
         }
         console.log('Team A:', this.teamA);
         console.log('Team B:', this.teamB);
@@ -38,10 +41,7 @@ const findOpponent = (team) => {
     while (!randomOpponent.isAlive()) { 
         randomOpponent = team[randomBetween(0, team.length - 1)];
     }
-    console.log("Random oponent:", randomOpponent);
-    console.log("is he alive?:", randomOpponent.isAlive);
     return randomOpponent;
-    // return team.find((person) => person.isAlive())
 }
 
 function duel(attacker, victim) {
@@ -54,3 +54,5 @@ function duel(attacker, victim) {
 function isTeamDead(team) {
     return team.every((person) => !person.isAlive());
 }
+
+const timeout = async time => await new Promise(resolve => setTimeout(() => resolve() ,time));
