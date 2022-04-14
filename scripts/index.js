@@ -14,10 +14,10 @@ function gameInit() {
         gameController.battle(gameController.teamA, gameController.teamB);
     });
 
-    uiController.randomTeamsBtn.addEventListener('click', function () {
+    uiController.randomTeamsBtn.addEventListener('click', async function () {
             const enteredTeamCount = uiController.teamCountInput.value;
-            gameController.teamA = teamGenerator(enteredTeamCount, characterList);
-            gameController.teamB = teamGenerator(enteredTeamCount, characterList);
+            gameController.teamA = await teamGenerator(enteredTeamCount, characterList);
+            gameController.teamB = await teamGenerator(enteredTeamCount, characterList);
             uiController.renderTeams(gameController.teamA, gameController.teamB);
     })
 

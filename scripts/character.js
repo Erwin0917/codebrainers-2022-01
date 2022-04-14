@@ -50,6 +50,10 @@ export class Person {
         console.error('weapon is not instance of class Weapon');
     }
 
+    setName(name) {
+        this.name = name;
+    }
+
     attackModifier() {
         const modifiers = [-2, -2, -2, -1, 0, 1, 2, 3, 4, 5];
         return modifiers[Math.floor(this.strength / 2)];
@@ -74,21 +78,38 @@ export class Villain extends Person {
 
 export const characterList = [Hero, Villain];
 
-export function characterGenerator(listOfCharacters) {
-    const hitpoints = randomBetween(40, 60);
+export function characterGenerator(listOfCharacters, characterFromCards) {
+    const hitpoints = randomBetween(8, 12) * characterFromCards.toughness;
     const armor = randomBetween(5, 15);
-    const strength = randomBetween(8, 12)
+    const strength = randomBetween(2, 4) * characterFromCards.power;
     const weapon = weaponGenerator(weaponList);
     const character = listOfCharacters[Math.floor(Math.random() * listOfCharacters.length)];
     const newChar = new character(hitpoints, armor, strength);
     newChar.setWeapon(weapon);
+    newChar.setName(characterFromCards.name);
+    newChar.ID = characterFromCards.id;
+    newChar.image = characterFromCards.imageUrl;
     return newChar;
 }
 
-export function teamGenerator(teamCount, teamClass) {
+export async function teamGenerator(teamCount, teamClass) {
     const team = [];
+    const characterCardsArray = await getCharacterCards();
+
     for (let i = 0; i < teamCount; i++) {
-        team.push(characterGenerator(teamClass));
+        const characterFromCards = characterCardsArray[randomBetween(0, characterCardsArray.length-1)];
+        if (characterFromCards === undefined) {
+            throw new Error("characterFromCard is undefined.");
+        }
+        team.push(characterGenerator(teamClass, characterFromCards));
     }
     return team;
 }
+
+async function getCharacterCards() {
+    const response = await fetch("https://api.magicthegathering.io/v1/cards");
+    const responseJSON = await response.json();
+    console.log(responseJSON.cards);
+    return responseJSON.cards.filter((card) => card.type.toLowerCase().includes("creature") && !isNaN(parseInt(card.power)) || !isNaN(parseInt(card.toughness)));
+}
+
