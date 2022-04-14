@@ -67,3 +67,6 @@
     flex-direction: row;
     justify-content: space-evenly;
 }
+.image{
+    text-align: center;
+}
