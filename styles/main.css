@@ -61,12 +61,36 @@
     margin: 0;
 }
 
-.start-buttons{
+.start-buttons {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 }
-.image{
+
+.image {
     text-align: center;
+    overflow: hidden;
+    /* padding: 0 70px 0 0; */
+    margin: 0 20px 0 0;
+    padding: 0;
+    border-radius: 15px;
+}
+
+.image img {
+    margin: -60px -28px -322px -10px;
+    padding: 20px 49px 20px 0;
+}
+
+.card-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+}
+
+.stats-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: space-around;
 }

@@ -77,11 +77,15 @@ function generateCharacterCard(character) {
     const characterCard = document.createElement('div');
     characterCard.classList.add('character-card', 'rpgui-container', 'framed-golden');
     characterCard.innerHTML = `
+        <div class="card-wrapper">
         <div class="image"><img src=${character.image}></div>
+        <div class="stats-wrapper">
         <div class='name'>Name: <h4>${character.name}</h4></div>
         <div class='hp'>Hit points: <h4>${character.hitPoints}</h4></div>
         <div class='strength'>Strength: <h4>${character.strength}</h4></div>
         <div class='weapon-name'>Weapon Name: <h4>${character.weapon.name}</h4></div>
+        </div>
+        </div>
     `;
     const hpProgressBar = generateProgressBar("HP:", "red", character.getPercentHealth());
     const armorProgressBar = generateProgressBar("Armor:", "blue");
