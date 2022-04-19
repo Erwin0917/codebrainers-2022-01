@@ -110,6 +110,6 @@ async function getCharacterCards() {
     const response = await fetch("https://api.magicthegathering.io/v1/cards");
     const responseJSON = await response.json();
     console.log(responseJSON.cards);
-    return responseJSON.cards.filter((card) => card.type.toLowerCase().includes("creature") && !isNaN(parseInt(card.power)) || !isNaN(parseInt(card.toughness)));
+    return responseJSON.cards.filter((card) => card.type.toLowerCase().includes("creature") && (!isNaN(parseInt(card.power)) || !isNaN(parseInt(card.toughness))) && card.imageUrl !== undefined);
 }
 

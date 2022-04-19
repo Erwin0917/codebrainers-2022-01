@@ -19,6 +19,9 @@ function gameInit() {
             gameController.teamA = await teamGenerator(enteredTeamCount, characterList);
             gameController.teamB = await teamGenerator(enteredTeamCount, characterList);
             uiController.renderTeams(gameController.teamA, gameController.teamB);
+
+            localStorage.setItem("teamA", JSON.stringify(gameController.teamA));
+            localStorage.setItem("teamB", JSON.stringify(gameController.teamB));
     })
 
     // if (isTeamAlive(gameController.teamB)) {
