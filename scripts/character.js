@@ -1,4 +1,4 @@
-import { randomBetween } from './utilis.js';
+import { randomBetween, urlExists } from './utilis.js';
 import { Weapon, weaponGenerator, weaponList } from './weapon.js';
 
 export class Person {
@@ -95,11 +95,12 @@ export function characterGenerator(listOfCharacters, characterFromCards) {
 export async function teamGenerator(teamCount, teamClass) {
     const team = [];
     const characterCardsArray = await getCharacterCards();
+    console.log("characterCardArray:", characterCardsArray);
 
     for (let i = 0; i < teamCount; i++) {
-        const characterFromCards = characterCardsArray[randomBetween(0, characterCardsArray.length-1)];
+        let characterFromCards = characterCardsArray[randomBetween(0, characterCardsArray.length-1)];
         if (characterFromCards === undefined) {
-            throw new Error("characterFromCard is undefined.");
+            throw new Error("characterFromCards is undefined.");
         }
         team.push(characterGenerator(teamClass, characterFromCards));
     }
@@ -109,7 +110,8 @@ export async function teamGenerator(teamCount, teamClass) {
 async function getCharacterCards() {
     const response = await fetch("https://api.magicthegathering.io/v1/cards");
     const responseJSON = await response.json();
-    console.log(responseJSON.cards);
-    return responseJSON.cards.filter((card) => card.type.toLowerCase().includes("creature") && !isNaN(parseInt(card.power)) || !isNaN(parseInt(card.toughness)));
+    // console.log(responseJSON.cards);
+    // Why doesn't below work?!
+    return responseJSON.cards.filter((card) => card.type.toLowerCase().includes("creature") && 'imageUrl' in card && !isNaN(parseInt(card.power)) && !isNaN(parseInt(card.toughness)));
 }
 
