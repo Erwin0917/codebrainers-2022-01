@@ -94,3 +94,21 @@
     width: 80%;
     justify-content: space-around;
 }
+
+@media (max-width: 1800px) {
+    .card-wrapper {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .stats-wrapper {
+        width: 100%;
+    }
+
+    .image img {
+        margin: -15px -10px -117px -10px;
+        padding: 0;
+        border-radius: 15px;
+    }
+}

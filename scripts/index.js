@@ -40,7 +40,9 @@ function gameInit() {
         console.log("gameController.teamA:", gameController.teamA);
 
         gameController.teamB = savedTeamB.map(resurrectCharacters);
-        console.log("gameController.teamB:", gameController.teamAB);
+        console.log("gameController.teamB:", gameController.teamB);
+
+        uiController.renderTeams(gameController.teamA, gameController.teamB);
     }
 
 
