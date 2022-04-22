@@ -1,3 +1,4 @@
+import { resurrectCharacters } from "./index.js";
 export class UiController {
     constructor(gameWrapperHtml) {
 
@@ -96,3 +97,9 @@ function generateCharacterCard(character) {
     return characterCard;
 }
 
+
+export function loadTeams(teamOne, teamTwo) {
+    
+
+    
+}

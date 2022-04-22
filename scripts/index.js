@@ -9,7 +9,7 @@ const TEAM_B_KEY = "teamB";
 
 function gameInit() {
     const gameWrapperHtml = document.querySelector('.game-wrapper');
-
+    const loadBtn = document.querySelector("#button-load-teams");
     const uiController = new UiController(gameWrapperHtml);
     const gameController = new GameController(uiController);
 
@@ -35,21 +35,26 @@ function gameInit() {
     console.log("TEAM A:", savedTeamA);
     console.log("TEAM B:", savedTeamB);
 
-    if (savedTeamA !== null && savedTeamB !== null) {
-        gameController.teamA = savedTeamA.map(resurrectCharacters);
-        console.log("gameController.teamA:", gameController.teamA);
+    loadBtn.addEventListener("click", function () {
+        if (savedTeamA !== null && savedTeamB !== null) {
+            gameController.teamA = savedTeamA.map(resurrectCharacters);
+            console.log("gameController.teamA:", gameController.teamA);
 
-        gameController.teamB = savedTeamB.map(resurrectCharacters);
-        console.log("gameController.teamB:", gameController.teamB);
+            gameController.teamB = savedTeamB.map(resurrectCharacters);
+            console.log("gameController.teamB:", gameController.teamB);
 
-        uiController.renderTeams(gameController.teamA, gameController.teamB);
-    }
+            uiController.renderTeams(gameController.teamA, gameController.teamB);
+        } else {
+            console.alert("No teams in local storage.")
+        }
+    })
+    
 
 
 }
 
 // TODO: HOMEWORK
-function resurrectCharacters(characterData) {
+export function resurrectCharacters(characterData) {
     const hitpoints = characterData.hitPoints;
     const armorRating = characterData.armorRating;
     const strength = characterData.strength;
