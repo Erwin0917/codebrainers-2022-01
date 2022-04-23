@@ -1,5 +1,6 @@
 import {randomBetween} from "./utilis.js";
-import {characterList, teamGenerator} from "./character.js";
+import { characterList, teamGenerator } from "./character.js";
+import { TEAM_A_KEY, TEAM_B_KEY } from "./index.js";
 
 export class GameController {
     constructor(uiController) {
@@ -48,6 +49,11 @@ export class GameController {
 
         console.log('Team A after:', this.teamA);
         console.log('Team B after:', this.teamB);
+    }
+
+    saveTeamsToStorage = () => {
+        localStorage.setItem(TEAM_A_KEY, JSON.stringify(this.teamA));
+        localStorage.setItem(TEAM_B_KEY, JSON.stringify(this.teamB));
     }
 
 }

@@ -50,24 +50,22 @@ export class UiController {
             this.renderTeam(gamecontroller.teamA, "Team A", this.teamAWrapper);
 
             gamecontroller.teamA.forEach(person =>{
-                person.removeButton.addEventListener('click', (event)=>{
-                    const charId = event.target.getAttribute('ID');
-                    gamecontroller.teamA = gamecontroller.teamA.filter(person => person.ID !== charId);
-                    const characterFromCards = this.cards[randomBetween(0, this.cards.length-1)];
-                    gamecontroller.teamA.push(characterGenerator(characterList, characterFromCards))
+                person.removeButton.addEventListener('click', () => {
+                    const characterFromCards = this.cards[randomBetween(0, this.cards.length - 1)];
+                    gamecontroller.teamA = reloadCharacter(gamecontroller.teamA, person, characterFromCards);
                     this.renderTeams(gamecontroller);
+                    gamecontroller.saveTeamsToStorage();
                 })
             });
         }
         if (gamecontroller.teamB.length > 0) {
             this.renderTeam(gamecontroller.teamB, "Team B", this.teamBWrapper);
             gamecontroller.teamB.forEach(person =>{
-                person.removeButton.addEventListener('click', (event)=>{
-                    const charId = event.target.getAttribute('ID');
-                    gamecontroller.teamB = gamecontroller.teamB.filter(person => person.ID !== charId);
-                    const characterFromCards = this.cards[randomBetween(0, this.cards.length-1)];
-                    gamecontroller.teamB.push(characterGenerator(characterList, characterFromCards))
+                person.removeButton.addEventListener('click', ()=>{
+                    const characterFromCards = this.cards[randomBetween(0, this.cards.length - 1)];
+                    gamecontroller.teamB = reloadCharacter(gamecontroller.teamB, person, characterFromCards);
                     this.renderTeams(gamecontroller);
+                    gamecontroller.saveTeamsToStorage();
                 })
             });
         }
@@ -81,7 +79,7 @@ export class UiController {
     }
 
     updateTeamSize = (event) => {
-        const value = event.target.value;
+        const value = event.target.value;s
         this.teamSizeElement.innerText = value;
     }
 
@@ -97,12 +95,19 @@ export class UiController {
             gameController.teamB = savedTeamB.map(resurrectCharacters);
             console.log("gameController.teamB:", gameController.teamB);
 
-            this.renderTeams(gameController.teamA, gameController.teamB);
+            this.renderTeams(gameController);
         } else {
             alert("No teams in local storage.");
         }
     }
 
+}
+
+function reloadCharacter(team, person, characterFromCards) {
+    team = team.filter(innerPerson => innerPerson.ID !== person.ID);
+    team.push(characterGenerator(characterList, characterFromCards));
+
+    return team;
 }
 
 function generateProgressBar(labelName, color, value){

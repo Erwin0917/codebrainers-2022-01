@@ -21,8 +21,7 @@ function gameInit() {
         gameController.teamB = await teamGenerator(enteredTeamCount, characterList, uiController);
         uiController.renderTeams(gameController);
 
-        localStorage.setItem(TEAM_A_KEY, JSON.stringify(gameController.teamA));
-        localStorage.setItem(TEAM_B_KEY, JSON.stringify(gameController.teamB));
+        gameController.saveTeamsToStorage();
 
         const event = new Event('saveTeam');
         document.dispatchEvent(event);
