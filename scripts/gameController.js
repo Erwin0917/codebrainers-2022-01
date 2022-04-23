@@ -1,4 +1,5 @@
 import {randomBetween} from "./utilis.js";
+import {characterList, teamGenerator} from "./character.js";
 
 export class GameController {
     constructor(uiController) {
@@ -32,6 +33,21 @@ export class GameController {
         }
         console.log('Team A:', this.teamA);
         console.log('Team B:', this.teamB);
+
+        if (isTeamDead(this.teamA)){
+            this.teamA = await teamGenerator(this.teamA.length, characterList);
+            this.teamB.forEach(person => person.recover());
+            console.log("Team A defeated");
+        } else {
+            this.teamB = await teamGenerator(this.teamB.length, characterList);
+            this.teamA.forEach(person => person.recover());
+
+            console.log("Team B defeated");
+        }
+        this.uiController.renderTeams(this.teamA, this.teamB);
+
+        console.log('Team A after:', this.teamA);
+        console.log('Team B after:', this.teamB);
     }
 
 }

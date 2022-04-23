@@ -2,15 +2,13 @@ import { randomBetween } from './utilis.js';
 
 export class Weapon {
     constructor(name, minDamage = 0, maxDamage = 0) {
+        this.initWeapon(name, minDamage, maxDamage);
+    }
+
+    initWeapon(name = '', minDamage = 0, maxDamage = 0) {
         this.name = name;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
-
-        this.initWeapon(name);
-    }
-
-    initWeapon(name) {
-
     }
 
     getDamage() {

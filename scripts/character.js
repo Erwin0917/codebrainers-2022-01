@@ -13,6 +13,10 @@ export class Person {
 
     }
 
+    recover() {
+        this.hitPoints = this.maxValueOfHitPoints;
+    }
+
     attack(character) {
         if (!(character instanceof Person)) {
             console.error('\'Character\' is not an instance of \'Person\'');
