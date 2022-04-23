@@ -1,4 +1,6 @@
-import { resurrectCharacters } from "./index.js";
+import { TEAM_A_KEY, TEAM_B_KEY } from "./index.js";
+import { Weapon } from "./weapon.js";
+import { characterList } from "./character.js";
 export class UiController {
     constructor(gameWrapperHtml) {
 
@@ -12,8 +14,13 @@ export class UiController {
         this.teamAWrapper = gameWrapperHtml.querySelector('#teamA-wrapper');
         this.teamBWrapper = gameWrapperHtml.querySelector('#teamB-wrapper');
         this.teamSizeElement = gameWrapperHtml.querySelector('#size-teams');
+        this.loadBtn = document.querySelector("#button-load-teams");
+        if (localStorage.getItem(TEAM_A_KEY) !== null || localStorage.getItem(TEAM_B_KEY) !== null) {
+            this.loadBtn.style.display = 'block';
+        }
         this.initListeners();
     }
+    
 
     initListeners() {
         this.teamCountInput.addEventListener('change', this.updateTeamSize);
@@ -54,6 +61,24 @@ export class UiController {
     updateTeamSize = (event) => {
         const value = event.target.value;
         this.teamSizeElement.innerText = value;
+    }
+
+    loadTeams = (gameController) => {
+        const savedTeamA = JSON.parse(localStorage.getItem(TEAM_A_KEY));
+        const savedTeamB = JSON.parse(localStorage.getItem(TEAM_B_KEY));
+
+        if (savedTeamA !== null && savedTeamB !== null) {
+
+            gameController.teamA = savedTeamA.map(resurrectCharacters);
+            console.log("gameController.teamA:", gameController.teamA);
+
+            gameController.teamB = savedTeamB.map(resurrectCharacters);
+            console.log("gameController.teamB:", gameController.teamB);
+
+            this.renderTeams(gameController.teamA, gameController.teamB);
+        } else {
+            alert("No teams in local storage.");
+        }
     }
 
 }
@@ -98,8 +123,28 @@ function generateCharacterCard(character) {
 }
 
 
-export function loadTeams(teamOne, teamTwo) {
-    
 
-    
+function resurrectCharacters(characterData) {
+    const hitpoints = characterData.hitPoints;
+    const armorRating = characterData.armorRating;
+    const strength = characterData.strength;
+    const weapon = reforgeWeapon(characterData.weapon);
+    const character = characterList[Math.floor(Math.random() * characterList.length)];
+    const newChar = new character(hitpoints, armorRating, strength);
+    newChar.setName(characterData.name);
+    newChar.ID = characterData.ID;
+    newChar.image = characterData.image;
+    newChar.setWeapon(weapon);
+
+    return newChar;
 }
+
+function reforgeWeapon(weaponData) {
+    const weaponName = weaponData.name;
+    const weaponMinDamage = weaponData.minDamage;
+    const weaponMaxDamage = weaponData.maxDamage;
+
+    return new Weapon(weaponName, weaponMinDamage, weaponMaxDamage);
+}
+
+

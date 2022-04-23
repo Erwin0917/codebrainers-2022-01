@@ -95,6 +95,10 @@
     justify-content: space-around;
 }
 
+#button-load-teams {
+    display: none;
+}
+
 @media (max-width: 1800px) {
     .card-wrapper {
         flex-direction: column;
