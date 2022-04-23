@@ -35,11 +35,11 @@ export class GameController {
         console.log('Team B:', this.teamB);
 
         if (isTeamDead(this.teamA)){
-            this.teamA = await teamGenerator(this.teamA.length, characterList);
+            this.teamA = await teamGenerator(this.teamA.length, characterList, this.uiController);
             this.teamB.forEach(person => person.recover());
             console.log("Team A defeated");
         } else {
-            this.teamB = await teamGenerator(this.teamB.length, characterList);
+            this.teamB = await teamGenerator(this.teamB.length, characterList, this.uiController);
             this.teamA.forEach(person => person.recover());
 
             console.log("Team B defeated");

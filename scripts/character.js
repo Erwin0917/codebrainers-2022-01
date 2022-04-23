@@ -96,13 +96,16 @@ export function characterGenerator(listOfCharacters, characterFromCards) {
     return newChar;
 }
 
-export async function teamGenerator(teamCount, teamClass) {
+export async function teamGenerator(teamCount, teamClass, gamecontroller) {
     const team = [];
-    const characterCardsArray = await getCharacterCards();
-    console.log("characterCardArray:", characterCardsArray);
+    if (gamecontroller.cards === null) {
+        gamecontroller.cards = await getCharacterCards()
+    }
+
+    console.log('gamecontroller.cards', gamecontroller.cards);
 
     for (let i = 0; i < teamCount; i++) {
-        let characterFromCards = characterCardsArray[randomBetween(0, characterCardsArray.length-1)];
+        let characterFromCards = gamecontroller.cards[randomBetween(0, gamecontroller.cards.length-1)];
         if (characterFromCards === undefined) {
             throw new Error("characterFromCards is undefined.");
         }

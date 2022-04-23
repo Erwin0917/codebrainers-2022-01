@@ -17,8 +17,8 @@ function gameInit() {
 
     uiController.randomTeamsBtn.addEventListener('click', async function () {
         const enteredTeamCount = uiController.teamCountInput.value;
-        gameController.teamA = await teamGenerator(enteredTeamCount, characterList);
-        gameController.teamB = await teamGenerator(enteredTeamCount, characterList);
+        gameController.teamA = await teamGenerator(enteredTeamCount, characterList, uiController);
+        gameController.teamB = await teamGenerator(enteredTeamCount, characterList, uiController);
         uiController.renderTeams(gameController);
 
         localStorage.setItem(TEAM_A_KEY, JSON.stringify(gameController.teamA));

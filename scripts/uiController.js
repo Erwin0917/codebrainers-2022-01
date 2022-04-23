@@ -1,6 +1,7 @@
 import { TEAM_A_KEY, TEAM_B_KEY } from "./index.js";
 import { Weapon } from "./weapon.js";
-import { characterList } from "./character.js";
+import {characterGenerator, characterList} from "./character.js";
+import {randomBetween} from "./utilis.js";
 export class UiController {
     constructor(gameWrapperHtml) {
 
@@ -15,6 +16,7 @@ export class UiController {
         this.teamBWrapper = gameWrapperHtml.querySelector('#teamB-wrapper');
         this.teamSizeElement = gameWrapperHtml.querySelector('#size-teams');
         this.loadBtn = document.querySelector("#button-load-teams");
+        this.cards = null;
         if (localStorage.getItem(TEAM_A_KEY) !== null || localStorage.getItem(TEAM_B_KEY) !== null) {
             this.loadBtn.style.display = 'block';
         }
@@ -51,6 +53,8 @@ export class UiController {
                 person.removeButton.addEventListener('click', (event)=>{
                     const charId = event.target.getAttribute('ID');
                     gamecontroller.teamA = gamecontroller.teamA.filter(person => person.ID !== charId);
+                    const characterFromCards = this.cards[randomBetween(0, this.cards.length-1)];
+                    gamecontroller.teamA.push(characterGenerator(characterList, characterFromCards))
                     this.renderTeams(gamecontroller);
                 })
             });
@@ -61,6 +65,8 @@ export class UiController {
                 person.removeButton.addEventListener('click', (event)=>{
                     const charId = event.target.getAttribute('ID');
                     gamecontroller.teamB = gamecontroller.teamB.filter(person => person.ID !== charId);
+                    const characterFromCards = this.cards[randomBetween(0, this.cards.length-1)];
+                    gamecontroller.teamB.push(characterGenerator(characterList, characterFromCards))
                     this.renderTeams(gamecontroller);
                 })
             });
