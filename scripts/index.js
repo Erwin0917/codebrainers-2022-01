@@ -45,7 +45,7 @@ function gameInit() {
 
             uiController.renderTeams(gameController.teamA, gameController.teamB);
         } else {
-            console.alert("No teams in local storage.")
+            alert("No teams in local storage.")
         }
     })
     
