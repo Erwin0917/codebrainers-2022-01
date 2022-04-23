@@ -19,7 +19,7 @@ function gameInit() {
         const enteredTeamCount = uiController.teamCountInput.value;
         gameController.teamA = await teamGenerator(enteredTeamCount, characterList);
         gameController.teamB = await teamGenerator(enteredTeamCount, characterList);
-        uiController.renderTeams(gameController.teamA, gameController.teamB);
+        uiController.renderTeams(gameController);
 
         localStorage.setItem(TEAM_A_KEY, JSON.stringify(gameController.teamA));
         localStorage.setItem(TEAM_B_KEY, JSON.stringify(gameController.teamB));

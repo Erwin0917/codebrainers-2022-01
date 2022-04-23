@@ -16,7 +16,7 @@ export class GameController {
                         return;
                     }
                     duel(personA, findOpponent(this.teamB));
-                    this.uiController.renderTeams(this.teamA, this.teamB);
+                    this.uiController.renderTeams(this);
                 })
             } else {
                 this.teamB.forEach((personB, index) => {
@@ -24,7 +24,7 @@ export class GameController {
                         return;
                     }
                     duel(personB, findOpponent(this.teamA));
-                    this.uiController.renderTeams(this.teamA, this.teamB);
+                    this.uiController.renderTeams(this);
                 })
             }
 
@@ -44,7 +44,7 @@ export class GameController {
 
             console.log("Team B defeated");
         }
-        this.uiController.renderTeams(this.teamA, this.teamB);
+        this.uiController.renderTeams(this);
 
         console.log('Team A after:', this.teamA);
         console.log('Team B after:', this.teamB);

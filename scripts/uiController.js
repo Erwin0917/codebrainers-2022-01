@@ -37,17 +37,33 @@ export class UiController {
         team.forEach(character => {
             const card = generateCharacterCard(character);
             teamWrapper.appendChild(card);
+            character.removeButton = document.getElementById(character.ID)
         });
     }
 
-    renderTeams = (teamA, teamB) => {
+    renderTeams = (gamecontroller) => {
         this.deleteTeamsFromHTML();
-        if (teamA.length > 0) {
-            this.renderTeam(teamA, "Team A", this.teamAWrapper);
-        }
+        console.log(gamecontroller);
+        if (gamecontroller.teamA.length > 0) {
+            this.renderTeam(gamecontroller.teamA, "Team A", this.teamAWrapper);
 
-        if (teamB.length > 0) {
-            this.renderTeam(teamB, "Team B", this.teamBWrapper);
+            gamecontroller.teamA.forEach(person =>{
+                person.removeButton.addEventListener('click', (event)=>{
+                    const charId = event.target.getAttribute('ID');
+                    gamecontroller.teamA = gamecontroller.teamA.filter(person => person.ID !== charId);
+                    this.renderTeams(gamecontroller);
+                })
+            });
+        }
+        if (gamecontroller.teamB.length > 0) {
+            this.renderTeam(gamecontroller.teamB, "Team B", this.teamBWrapper);
+            gamecontroller.teamB.forEach(person =>{
+                person.removeButton.addEventListener('click', (event)=>{
+                    const charId = event.target.getAttribute('ID');
+                    gamecontroller.teamB = gamecontroller.teamB.filter(person => person.ID !== charId);
+                    this.renderTeams(gamecontroller);
+                })
+            });
         }
     }
 
@@ -113,11 +129,18 @@ function generateCharacterCard(character) {
         </div>
         </div>
     `;
+
     const hpProgressBar = generateProgressBar("HP:", "red", character.getPercentHealth());
     const armorProgressBar = generateProgressBar("Armor:", "blue");
 
     characterCard.appendChild(hpProgressBar);
     characterCard.appendChild(armorProgressBar);
+
+   const addNewCharacterBtn = document.createElement('button');
+   addNewCharacterBtn.classList.add('rpgui-button');
+   addNewCharacterBtn.setAttribute('id', character.ID);
+   addNewCharacterBtn.innerText = 'Change character';
+    characterCard.appendChild(addNewCharacterBtn);
 
     return characterCard;
 }
